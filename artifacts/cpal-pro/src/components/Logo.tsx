@@ -39,7 +39,7 @@ export default function Logo({ className, variant = "default", iconOnly = false,
           height: iconPx,
         }}
       />
-      <span className="text-destructive"
+      <span
         style={{
           fontFamily: "'Sora', 'Manrope', system-ui, sans-serif",
           fontWeight: 700,
@@ -49,7 +49,8 @@ export default function Logo({ className, variant = "default", iconOnly = false,
           whiteSpace: "nowrap",
         }}
       >
-        Nurture Next
+        <span style={{ color: "#ffffff" }}>Nurture</span>{" "}
+        <span style={{ color: "hsl(41, 59%, 59%)" }}>Next</span>
       </span>
     </span>
   );
