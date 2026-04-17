@@ -9,6 +9,9 @@ declare global {
 }
 
 const SCRIPT_ID = "askfirm-widget-script";
+const WIDGET_URL = import.meta.env.DEV
+  ? "http://localhost:4200"
+  : "https://accumax-client-portal.azurewebsites.net";
 
 export default function AskfirmWidgetEmbed() {
   useEffect(() => {
@@ -19,7 +22,7 @@ export default function AskfirmWidgetEmbed() {
     script.id = SCRIPT_ID;
     script.src = "/askfirm-widget.js";
     script.async = true;
-    script.dataset.widgetUrl = "https://accumax-client-portal.azurewebsites.net";
+    script.dataset.widgetUrl = WIDGET_URL;
     script.dataset.path = "/askfirm";
     script.dataset.color = "#10182d";
     script.dataset.textColor = "#FFFFFF";
