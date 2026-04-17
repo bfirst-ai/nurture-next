@@ -16,15 +16,12 @@ export default function Login() {
     e.preventDefault();
     toast({
       title: "Demo mode",
-      description: "Demo mode — authentication not connected",
+      description: "Demo mode - authentication not connected",
     });
   };
 
   return (
     <div className="min-h-[100dvh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-navy relative overflow-hidden text-white">
-      <div className="grain-overlay absolute inset-0 z-0"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2 z-0" />
-      
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="flex justify-center mb-6">
           <Link href="/">
@@ -41,7 +38,7 @@ export default function Login() {
         animate={{ opacity: 1, y: 0 }}
         className="mt-10 sm:mx-auto sm:w-full sm:max-w-md relative z-10"
       >
-        <div className="bg-white/5 backdrop-blur-xl py-10 px-6 sm:rounded-3xl sm:px-10 border border-white/10 shadow-2xl">
+        <div className="bg-white/5 py-10 px-6 sm:rounded-3xl sm:px-10 border border-white/10 shadow-2xl">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <Label htmlFor="email" className="text-white/80">Email address</Label>

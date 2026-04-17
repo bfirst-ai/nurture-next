@@ -7,13 +7,14 @@ interface LogoProps {
 
 export default function Logo({ className, variant = "default", iconOnly = false, size = "md" }: LogoProps) {
   const iconPx = size === "sm" ? 44 : size === "lg" ? 64 : 52;
-  const titleSize = size === "sm" ? "0.95rem" : size === "lg" ? "1.3rem" : "1.08rem";
+  const logoWidth = size === "sm" ? 72 : size === "lg" ? 140 : 104;
+  const titleSize = size === "sm" ? "1.02rem" : size === "lg" ? "1.38rem" : "1.14rem";
   void variant;
 
   if (iconOnly) {
     return (
       <img
-        src="/Nurture-logo.png"
+        src="/Logo.png"
         alt="Nurture Next logo"
         width={iconPx}
         height={iconPx}
@@ -29,14 +30,12 @@ export default function Logo({ className, variant = "default", iconOnly = false,
   return (
     <span className={`inline-flex items-center gap-2.5 select-none leading-none ${className ?? ""}`}>
       <img
-        src="/Nurture-logo.png"
+        src="/Logo.png"
         alt="Nurture Next logo"
-        width={iconPx}
-        height={iconPx}
         className="shrink-0 object-contain"
         style={{
-          width: iconPx,
-          height: iconPx,
+          width: logoWidth,
+          height: "auto",
         }}
       />
       <span
@@ -44,15 +43,14 @@ export default function Logo({ className, variant = "default", iconOnly = false,
           fontFamily: "'Sora', 'Manrope', system-ui, sans-serif",
           fontWeight: 700,
           fontSize: titleSize,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.03em",
           lineHeight: 1,
           whiteSpace: "nowrap",
         }}
       >
-        <span style={{ color: "#ffffff" }}>Nurture</span>{" "}
-        <span style={{ color: "hsl(41, 59%, 59%)" }}>Next</span>
+        <span style={{ color: "#FFFFFF", textShadow: "0 0 2px rgba(0,0,0,0.45)" }}>Nurture</span>{" "}
+        <span style={{ color: "#FFFFFF" }}>Next</span>
       </span>
     </span>
   );
 }
-

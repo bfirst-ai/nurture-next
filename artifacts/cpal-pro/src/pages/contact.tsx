@@ -27,21 +27,19 @@ export default function Contact() {
 
   return (
     <div className="w-full bg-background pb-24">
-      {/* ── Minimal Hero ── */}
       <div className="bg-card border-b border-border py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl text-center">
           <p className="text-accent font-semibold text-sm uppercase tracking-widest mb-3">Support</p>
           <h1 className="text-4xl md:text-5xl font-bold font-display mb-6 text-foreground">Get in touch</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            Whether you need a quick tax query answered or full business compliance advisory, we're here to help.
+            Whether you need a quick tax question answered or full-service CPA support, we&apos;re here to help.
           </p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-6xl mx-auto">
-          
-          {/* Left: Form */}
+
           <div>
             <h2 className="text-3xl font-bold mb-8 font-display text-foreground">Send a message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -55,7 +53,7 @@ export default function Contact() {
                   <Input id="last-name" required className="h-12 rounded-xl bg-card" />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-foreground">Email</Label>
@@ -74,9 +72,9 @@ export default function Contact() {
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tax">Income Tax</SelectItem>
-                    <SelectItem value="gst">GST Services</SelectItem>
-                    <SelectItem value="business">Business Registration</SelectItem>
+                    <SelectItem value="tax">Tax Return Filing</SelectItem>
+                    <SelectItem value="sales-tax">Sales Tax Services</SelectItem>
+                    <SelectItem value="entity-setup">Business Entity Setup</SelectItem>
                     <SelectItem value="consultation">General Consultation</SelectItem>
                   </SelectContent>
                 </Select>
@@ -86,8 +84,7 @@ export default function Contact() {
                 <Label htmlFor="message" className="text-foreground">Message</Label>
                 <Textarea id="message" className="min-h-[140px] rounded-xl bg-card" required />
               </div>
-              
-              {/* Desktop CTA hidden on lg, shown on mobile */}
+
               <div className="lg:hidden mt-8">
                 <Button type="submit" className="w-full h-14 text-lg font-bold rounded-xl bg-primary text-white">Book Slot & Send</Button>
               </div>
@@ -98,7 +95,7 @@ export default function Contact() {
               <div className="space-y-5">
                 <div className="flex items-start gap-4 text-sm">
                   <MapPin className="w-5 h-5 text-primary shrink-0" />
-                  <span className="text-foreground font-medium leading-relaxed">100 Fintech Hub, Koramangala<br/>Bengaluru, Karnataka 560034</span>
+                  <span className="text-foreground font-medium leading-relaxed">350 Fifth Avenue, Suite 4100<br/>New York, NY 10118</span>
                 </div>
                 <div className="flex items-center gap-4 text-sm">
                   <Mail className="w-5 h-5 text-primary shrink-0" />
@@ -106,18 +103,17 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center gap-4 text-sm">
                   <Phone className="w-5 h-5 text-primary shrink-0" />
-                  <span className="text-foreground font-medium">+91 98765 43210</span>
+                  <span className="text-foreground font-medium">+1 (212) 555-0147</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right: Time slot picker */}
           <div>
             <div className="bg-card border border-border rounded-3xl p-8 lg:p-10 shadow-sm sticky top-24">
               <h2 className="text-2xl font-bold mb-2 font-display text-foreground">Pick a slot</h2>
-              <p className="text-muted-foreground mb-8">Schedule a free 15-min discovery call.</p>
-              
+              <p className="text-muted-foreground mb-8">Schedule a free 15-minute discovery call.</p>
+
               {isSubmitted ? (
                 <div className="py-10 text-center flex flex-col items-center">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -139,8 +135,8 @@ export default function Contact() {
                             type="button"
                             onClick={() => setSelectedDay(i)}
                             className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all ${
-                              selectedDay === i 
-                                ? "bg-primary border-primary text-white shadow-md" 
+                              selectedDay === i
+                                ? "bg-primary border-primary text-white shadow-md"
                                 : "bg-background border-border text-muted-foreground hover:border-primary/40 hover:bg-primary/5"
                             }`}
                           >
@@ -153,7 +149,7 @@ export default function Contact() {
                   </div>
 
                   <div className="mb-10">
-                    <Label className="text-foreground font-bold mb-3 block">Time (IST)</Label>
+                    <Label className="text-foreground font-bold mb-3 block">Time (ET)</Label>
                     <div className="grid grid-cols-2 gap-3">
                       {slots.map((slot) => (
                         <button
@@ -161,8 +157,8 @@ export default function Contact() {
                           type="button"
                           onClick={() => setSelectedSlot(slot)}
                           className={`py-3 px-4 rounded-xl text-sm font-bold transition-all border ${
-                            selectedSlot === slot 
-                              ? "bg-primary border-primary text-white shadow-md" 
+                            selectedSlot === slot
+                              ? "bg-primary border-primary text-white shadow-md"
                               : "bg-background border-border text-foreground hover:border-primary/40 hover:bg-primary/5"
                           }`}
                         >
@@ -179,7 +175,7 @@ export default function Contact() {
               )}
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>

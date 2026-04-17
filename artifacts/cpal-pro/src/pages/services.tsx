@@ -6,78 +6,78 @@ import { motion } from "framer-motion";
 
 const servicesData = [
   {
-    id: "itr",
+    id: "individual-tax",
     category: "Tax",
     icon: FileText,
-    title: "Income Tax Filing",
-    description: "End-to-end filing for salaried employees, freelancers, traders, and businesses.",
-    price: "₹999",
+    title: "Individual & Business Tax Returns",
+    description: "End-to-end federal and state filing for employees, contractors, investors, and business owners.",
+    price: "$149",
     features: [
-      "ITR-1 to ITR-6 covered",
-      "Dedicated CA assigned",
-      "Capital gains & crypto computation",
-      "Foreign income reporting (DTAA)"
+      "1040, Schedule C, and small business return support",
+      "Dedicated CPA assigned",
+      "Capital gains and crypto tax computation",
+      "State filings and extension support"
     ]
   },
   {
-    id: "gst",
-    category: "GST",
+    id: "sales-tax",
+    category: "Sales Tax",
     icon: Calculator,
-    title: "GST Filing & Compliance",
-    description: "Seamless monthly returns and strict compliance for businesses of all sizes.",
-    price: "₹1,499",
+    title: "Sales Tax Filing & Compliance",
+    description: "Multi-state sales tax setup, filing, and reconciliation for growing businesses.",
+    price: "$199/mo",
     features: [
-      "New GST Registration",
-      "Monthly/Quarterly returns filing",
-      "Input Tax Credit (ITC) reconciliation",
-      "Annual Return (GSTR-9) preparation"
+      "State sales tax account registration",
+      "Monthly or quarterly return filing",
+      "Nexus tracking and liability reconciliation",
+      "Audit-ready filing documentation"
     ]
   },
   {
-    id: "business",
+    id: "entity-setup",
     category: "Business",
     icon: Building2,
-    title: "Business Registration",
-    description: "Incorporate your startup correctly from day one with all legal compliance.",
-    price: "₹2,999",
+    title: "Business Entity Setup",
+    description: "Set up your LLC or corporation correctly from day one with clean financial controls.",
+    price: "$299",
     features: [
-      "Pvt Ltd / LLP / OPC incorporation",
-      "DSC & DIN for Directors",
-      "PAN, TAN & Bank Account setup",
-      "Initial compliance setup"
+      "LLC or corporation formation support",
+      "EIN registration and state account setup",
+      "Business banking and bookkeeping kickoff checklist",
+      "Initial compliance calendar setup"
     ]
   },
   {
     id: "notice",
-    category: "Legal",
+    category: "Advisory",
     icon: ShieldAlert,
-    title: "Notice Handling",
-    description: "Expert representation for Income Tax or GST notices.",
+    title: "IRS & State Notice Handling",
+    description: "Expert response drafting and representation for IRS and state tax notices.",
     price: "Custom",
     features: [
-      "Detailed analysis of notice",
-      "Drafting legal and factual response",
-      "Representation before tax officer",
-      "Appeals and litigation support"
+      "Detailed notice analysis",
+      "Legal and factual response drafting",
+      "CPA representation during correspondence",
+      "Appeal strategy support"
     ]
   },
   {
     id: "review",
     category: "Tax",
     icon: FileSearch,
-    title: "Document Review",
-    description: "A quick health-check of your tax documents before you file.",
-    price: "₹499",
+    title: "Pre-Filing Document Review",
+    description: "A fast, expert health-check of your tax packet before submission.",
+    price: "$99",
     features: [
-      "Review of Form 16 & salary slips",
-      "Investment proof verification",
-      "Deduction optimization analysis",
-      "Checklist output provided"
+      "Review of W-2s, 1099s, and brokerage statements",
+      "Deduction and credit coverage check",
+      "Missing-document risk assessment",
+      "Actionable filing checklist delivered"
     ]
   }
 ];
 
-const tabs = ["All", "Tax", "GST", "Business", "Legal"];
+const tabs = ["All", "Tax", "Sales Tax", "Business", "Advisory"];
 
 export default function Services() {
   const [activeTab, setActiveTab] = useState("All");
@@ -86,29 +86,26 @@ export default function Services() {
 
   return (
     <div className="w-full bg-background min-h-screen pb-24">
-      {/* ── Dark minimal hero ── */}
       <div className="bg-navy py-24 md:py-32 relative overflow-hidden">
-        <div className="grain-overlay absolute inset-0 z-0"></div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center max-w-3xl">
           <div className="text-gold text-sm font-medium mb-4 uppercase tracking-widest">Nurture Next Offerings</div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-white mb-6">Expertise delivered.</h1>
           <div className="gold-rule mx-auto my-6 w-24" />
           <p className="text-xl text-white/80 leading-relaxed">
-            Transparent pricing. Expert execution. Choose the service you need and leave the complexity to us.
+            Transparent pricing. Expert execution. Choose the service you need and let us handle the complexity.
           </p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6 py-16">
-        {/* ── Filter Tabs ── */}
         <div className="flex flex-wrap justify-center gap-2 mb-16">
           {tabs.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                activeTab === tab 
-                  ? "bg-primary text-white shadow-md" 
+                activeTab === tab
+                  ? "bg-primary text-white shadow-md"
                   : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
               }`}
             >
@@ -117,10 +114,9 @@ export default function Services() {
           ))}
         </div>
 
-        {/* ── Service Cards ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
           {filteredServices.map((service, i) => (
-            <motion.div 
+            <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -132,15 +128,15 @@ export default function Services() {
                   <service.icon className="w-7 h-7" />
                 </div>
                 <div className="bg-accent/10 text-accent font-bold px-4 py-2 rounded-full text-sm">
-                  {service.price} {service.price !== "Custom" && <span className="font-normal opacity-80 text-xs">onwards</span>}
+                  {service.price} {service.price !== "Custom" && <span className="font-normal opacity-80 text-xs">starting</span>}
                 </div>
               </div>
-              
+
               <h3 className="text-2xl font-bold mb-3 font-display">{service.title}</h3>
               <p className="text-muted-foreground text-base leading-relaxed mb-8 min-h-[3rem]">{service.description}</p>
-              
+
               <div className="bg-muted/30 rounded-2xl p-6 mb-8 flex-grow">
-                <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wide">What's included</h4>
+                <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wide">What&apos;s included</h4>
                 <ul className="space-y-4">
                   {service.features.map((feature, j) => (
                     <li key={j} className="flex items-start gap-3">
@@ -159,7 +155,7 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
-        
+
         {filteredServices.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
             No services found for this category.

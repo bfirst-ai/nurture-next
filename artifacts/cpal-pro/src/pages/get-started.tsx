@@ -9,10 +9,10 @@ import { UploadCloud, CheckCircle2, FileText, Calculator, Building2, ShieldAlert
 import { useToast } from "@/hooks/use-toast";
 
 const servicesList = [
-  { id: "itr", icon: FileText, label: "Income Tax" },
-  { id: "gst", icon: Calculator, label: "GST Services" },
-  { id: "business", icon: Building2, label: "Business Reg" },
-  { id: "notice", icon: ShieldAlert, label: "Notice Handling" },
+  { id: "individual-tax", icon: FileText, label: "Tax Return Filing" },
+  { id: "sales-tax", icon: Calculator, label: "Sales Tax Services" },
+  { id: "entity-setup", icon: Building2, label: "Entity Setup" },
+  { id: "notice", icon: ShieldAlert, label: "IRS Notice Help" },
   { id: "other", icon: MoreHorizontal, label: "Other" }
 ];
 
@@ -20,7 +20,7 @@ export default function GetStarted() {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedService, setSelectedService] = useState("itr");
+  const [selectedService, setSelectedService] = useState("individual-tax");
   const { toast } = useToast();
 
   const handleNext = () => {
@@ -37,14 +37,14 @@ export default function GetStarted() {
     setIsSubmitted(true);
     toast({
       title: "Request received!",
-      description: "We'll contact you within 2 hours.",
+      description: "We will contact you within one business day.",
     });
   };
 
   if (isSubmitted) {
     return (
       <div className="flex-1 w-full bg-background flex items-center justify-center py-20 px-4 min-h-[80vh]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-md w-full bg-card border border-border rounded-3xl p-10 text-center shadow-lg"
@@ -52,9 +52,9 @@ export default function GetStarted() {
           <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <h2 className="text-3xl font-bold font-display mb-4 text-foreground">You're all set!</h2>
+          <h2 className="text-3xl font-bold font-display mb-4 text-foreground">You&apos;re all set!</h2>
           <p className="text-muted-foreground mb-8 text-lg">
-            We've received your request. A certified CPA will review your details and reach out within 2 hours.
+            We&apos;ve received your request. A licensed CPA will review your details and reach out shortly.
           </p>
           <Button onClick={() => window.location.href = "/dashboard"} className="w-full h-14 rounded-xl text-lg font-bold">
             Go to Dashboard
@@ -67,8 +67,7 @@ export default function GetStarted() {
   return (
     <div className="flex-1 w-full bg-background py-16">
       <div className="container mx-auto px-4 md:px-6">
-        
-        {/* Progress Bar */}
+
         <div className="max-w-4xl mx-auto mb-12">
           <div className="flex justify-between mb-3">
             <span className="text-sm font-bold text-primary">Step {step} of 3</span>
@@ -77,40 +76,39 @@ export default function GetStarted() {
             </span>
           </div>
           <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-primary transition-all duration-500 ease-in-out" 
+            <div
+              className="h-full bg-primary transition-all duration-500 ease-in-out"
               style={{ width: `${(step / 3) * 100}%` }}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto">
-          
-          {/* Left: Form Area */}
+
           <div className="lg:col-span-7 bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm">
             <form onSubmit={step === 3 ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
-              
+
               {step === 1 && (
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
                   <h2 className="text-2xl font-bold font-display mb-8 text-foreground">Tell us about yourself</h2>
                   <div className="space-y-3">
                     <Label htmlFor="name" className="text-foreground">Full Name</Label>
-                    <Input id="name" required className="h-12 rounded-xl bg-background" placeholder="e.g. Rohan Sharma" />
+                    <Input id="name" required className="h-12 rounded-xl bg-background" placeholder="e.g. Jordan Miller" />
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="email" className="text-foreground">Email Address</Label>
-                    <Input id="email" type="email" required className="h-12 rounded-xl bg-background" placeholder="rohan@example.com" />
+                    <Input id="email" type="email" required className="h-12 rounded-xl bg-background" placeholder="jordan@example.com" />
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="phone" className="text-foreground">Phone Number</Label>
                     <div className="flex">
-                      <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-input bg-muted text-muted-foreground text-sm font-medium">+91</span>
-                      <Input id="phone" type="tel" required className="h-12 rounded-r-xl rounded-l-none bg-background flex-1" placeholder="98765 43210" />
+                      <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-input bg-muted text-muted-foreground text-sm font-medium">+1</span>
+                      <Input id="phone" type="tel" required className="h-12 rounded-r-xl rounded-l-none bg-background flex-1" placeholder="(555) 123-4567" />
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <Label htmlFor="pan" className="text-foreground">PAN Number (Optional for now)</Label>
-                    <Input id="pan" className="h-12 rounded-xl bg-background uppercase" placeholder="ABCDE1234F" />
+                    <Label htmlFor="tax-id" className="text-foreground">SSN/ITIN (Last 4 digits, optional)</Label>
+                    <Input id="tax-id" className="h-12 rounded-xl bg-background uppercase" placeholder="1234" maxLength={4} />
                   </div>
                 </motion.div>
               )}
@@ -138,11 +136,11 @@ export default function GetStarted() {
               {step === 3 && (
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-8">
                   <h2 className="text-2xl font-bold font-display mb-2 text-foreground">Upload Documents</h2>
-                  <p className="text-muted-foreground mb-6">You can skip this and provide documents later via dashboard.</p>
-                  
-                  <div 
+                  <p className="text-muted-foreground mb-6">You can skip this and share documents later via your dashboard.</p>
+
+                  <div
                     className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all cursor-pointer
-                      ${isDragging ? 'border-primary bg-primary/5' : 'border-gold bg-background hover:bg-muted/50'}`}
+                      ${isDragging ? "border-primary bg-primary/5" : "border-white/50 bg-background hover:bg-muted/50"}`}
                     onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                     onDragLeave={() => setIsDragging(false)}
                     onDrop={(e) => { e.preventDefault(); setIsDragging(false); }}
@@ -159,23 +157,22 @@ export default function GetStarted() {
 
                   <div className="space-y-3">
                     <Label htmlFor="notes" className="text-foreground">Additional Notes</Label>
-                    <Textarea 
-                      id="notes" 
-                      placeholder="Any specific queries or details you want your CPA to know..."
+                    <Textarea
+                      id="notes"
+                      placeholder="Any specific questions or context you want your CPA to know..."
                       className="min-h-[120px] rounded-xl bg-background"
                     />
                   </div>
                 </motion.div>
               )}
 
-              {/* Navigation Buttons */}
               <div className="mt-10 pt-6 border-t border-border flex justify-between">
                 {step > 1 ? (
                   <Button type="button" variant="ghost" onClick={handleBack} className="text-muted-foreground">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back
                   </Button>
                 ) : (<div></div>)}
-                
+
                 <Button type="submit" className="h-12 px-8 rounded-xl font-bold text-white bg-primary hover:bg-primary/90">
                   {step === 3 ? "Submit Request" : <>Continue <ArrowRight className="w-4 h-4 ml-2" /></>}
                 </Button>
@@ -183,13 +180,10 @@ export default function GetStarted() {
             </form>
           </div>
 
-          {/* Right: Dynamic Info Panel */}
           <div className="lg:col-span-5">
             <div className="bg-navy rounded-3xl p-8 text-white h-full shadow-lg relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary blur-3xl opacity-20 translate-x-1/2 -translate-y-1/2"></div>
-              
               <h3 className="text-xl font-bold font-display mb-6 text-gold">Guide</h3>
-              
+
               {step === 1 && (
                 <div className="space-y-4">
                   <p className="text-white/80 leading-relaxed">
@@ -205,45 +199,45 @@ export default function GetStarted() {
               {step === 2 && (
                 <div className="space-y-4">
                   <p className="text-white/80 leading-relaxed">
-                    Select the primary service you need. Don't worry if you're unsure or need multiple services — you can discuss everything during your free consultation.
+                    Select the primary service you need. If you need multiple services, we will scope everything during your consultation.
                   </p>
                 </div>
               )}
 
               {step === 3 && (
                 <div className="space-y-4">
-                  <h4 className="font-bold text-white mb-2">What to upload for {servicesList.find(s=>s.id===selectedService)?.label}:</h4>
-                  {selectedService === "itr" && (
+                  <h4 className="font-bold text-white mb-2">What to upload for {servicesList.find(s => s.id === selectedService)?.label}:</h4>
+                  {selectedService === "individual-tax" && (
                     <ul className="space-y-3 text-white/80 list-disc pl-4 marker:text-gold">
-                      <li>Form 16 (Part A & B)</li>
-                      <li>Bank statement (FY)</li>
-                      <li>Investment proofs (80C, etc)</li>
-                      <li>Capital gains statement (if applicable)</li>
+                      <li>W-2 and 1099 forms</li>
+                      <li>Last year&apos;s tax return (if available)</li>
+                      <li>Brokerage and crypto summaries (if applicable)</li>
+                      <li>Deduction records (mortgage interest, donations, etc.)</li>
                     </ul>
                   )}
-                  {selectedService === "gst" && (
+                  {selectedService === "sales-tax" && (
                     <ul className="space-y-3 text-white/80 list-disc pl-4 marker:text-gold">
-                      <li>Purchase & Sales invoices</li>
-                      <li>Bank statements</li>
-                      <li>Previous GST returns</li>
+                      <li>Sales by state report</li>
+                      <li>Marketplace settlement reports</li>
+                      <li>Recent sales tax returns</li>
                     </ul>
                   )}
-                  {selectedService === "business" && (
+                  {selectedService === "entity-setup" && (
                     <ul className="space-y-3 text-white/80 list-disc pl-4 marker:text-gold">
-                      <li>PAN Card of directors</li>
-                      <li>Aadhar Card / Passport</li>
-                      <li>Latest bank statement</li>
-                      <li>Utility bill for address proof</li>
+                      <li>Owner ID (driver&apos;s license or passport)</li>
+                      <li>Proposed business name and state</li>
+                      <li>Business address and mailing address</li>
+                      <li>Ownership breakdown details</li>
                     </ul>
                   )}
                   {['notice', 'other'].includes(selectedService) && (
-                    <p className="text-white/80">Upload any relevant notice copy, letter, or document you want the CPA to review before the call.</p>
+                    <p className="text-white/80">Upload any IRS/state letters, notices, or relevant documents for CPA review before the call.</p>
                   )}
                 </div>
               )}
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>

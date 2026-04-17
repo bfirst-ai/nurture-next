@@ -18,15 +18,12 @@ export default function Signup() {
     e.preventDefault();
     toast({
       title: "Demo mode",
-      description: "Demo mode — authentication not connected",
+      description: "Demo mode - authentication not connected",
     });
   };
 
   return (
     <div className="min-h-[100dvh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-navy relative overflow-hidden text-white">
-      <div className="grain-overlay absolute inset-0 z-0"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2 z-0" />
-      
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="flex justify-center mb-6">
           <Link href="/">
@@ -38,12 +35,12 @@ export default function Signup() {
         </h2>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mt-10 sm:mx-auto sm:w-full sm:max-w-md relative z-10"
       >
-        <div className="bg-white/5 backdrop-blur-xl py-10 px-6 sm:rounded-3xl sm:px-10 border border-white/10 shadow-2xl">
+        <div className="bg-white/5 py-10 px-6 sm:rounded-3xl sm:px-10 border border-white/10 shadow-2xl">
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <Label htmlFor="name" className="text-white/80">Full Name</Label>
@@ -55,7 +52,7 @@ export default function Signup() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full h-12 bg-white/10 border-white/20 text-white placeholder:text-white/30 rounded-xl focus:border-primary focus:ring-primary/50"
-                  placeholder="Rohan Sharma"
+                  placeholder="Jordan Miller"
                 />
               </div>
             </div>
@@ -78,7 +75,7 @@ export default function Signup() {
             <div>
               <Label htmlFor="phone" className="text-white/80">Phone Number</Label>
               <div className="mt-2 flex">
-                <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-white/20 bg-white/5 text-white/70 text-sm font-bold">+91</span>
+                <span className="inline-flex items-center px-4 rounded-l-xl border border-r-0 border-white/20 bg-white/5 text-white/70 text-sm font-bold">+1</span>
                 <Input
                   id="phone"
                   type="tel"
@@ -86,7 +83,7 @@ export default function Signup() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="flex-1 h-12 bg-white/10 border-white/20 text-white rounded-r-xl rounded-l-none focus:border-primary focus:ring-primary/50"
-                  placeholder="98765 43210"
+                  placeholder="(555) 123-4567"
                 />
               </div>
             </div>
@@ -104,7 +101,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            
+
             <div className="flex items-center mt-6">
               <input
                 id="terms"
@@ -122,7 +119,7 @@ export default function Signup() {
                 Create Account
               </Button>
             </div>
-            
+
             <div className="relative mt-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/10" />
@@ -144,7 +141,7 @@ export default function Signup() {
               </Button>
             </div>
           </form>
-          
+
           <p className="mt-8 text-center text-sm text-white/70">
             <Link href="/login" className="font-bold text-gold hover:text-gold/80 transition-colors">
               Already have an account? Sign in

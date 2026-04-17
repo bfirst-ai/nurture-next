@@ -4,7 +4,7 @@ import { ArrowRight, Menu, ShieldCheck, X } from "lucide-react";
 
 import Logo from "./Logo";
 import { Button } from "./ui/button";
-import ChatWidget from "./ChatWidget";
+import AskfirmWidgetEmbed from "./AskfirmWidgetEmbed";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -35,13 +35,13 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-[100dvh] w-full selection:bg-primary/20 selection:text-primary flex flex-col">
       {!isAuthPage && (
         <>
-          <div className="h-9 bg-navy text-[hsl(38,31%,92%)] text-xs">
+          <div className="h-9 bg-navy text-white/90 text-xs">
             <div className="container mx-auto px-4 md:px-6 h-full flex items-center justify-between">
               <p className="flex items-center gap-1.5 font-medium tracking-wide">
                 <ShieldCheck className="w-3.5 h-3.5 text-gold" />
                 SOC 2 aligned workflows and advisor-reviewed filing
               </p>
-              <Link href="/contact" className="hidden md:inline-flex items-center gap-1 text-gold hover:text-[hsl(41,70%,66%)] transition-colors font-semibold">
+              <Link href="/contact" className="hidden md:inline-flex items-center gap-1 text-gold hover:text-white/80 transition-colors font-semibold">
                 Book a compliance call <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -50,13 +50,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <header
             className={`sticky top-0 z-50 border-b transition-all duration-300 ${
               scrolled
-                ? "bg-background/92 border-border/70 backdrop-blur-xl"
-                : "bg-background/72 border-transparent backdrop-blur-md"
+                ? "bg-background/92 border-border/70"
+                : "bg-background/72 border-transparent"
             }`}
           >
             <div className="container mx-auto px-4 md:px-6 h-[4.5rem] flex items-center justify-between">
               <Link href="/" className="transition-opacity hover:opacity-90">
-                <Logo />
+                <Logo size="sm" />
               </Link>
 
               <nav className="hidden md:flex items-center rounded-full border border-border bg-card/75 p-1 gap-1">
@@ -100,7 +100,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
 
             {mobileOpen && (
-              <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
+              <div className="md:hidden border-t border-border bg-background/95">
                 <div className="px-4 py-4 space-y-2">
                   {navLinks.map((link) => (
                     <Link
@@ -132,16 +132,16 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <main className="flex-1 flex flex-col">{children}</main>
 
-      {!isAuthPage && <ChatWidget />}
+      {!isAuthPage && <AskfirmWidgetEmbed />}
 
       {!isAuthPage && (
-        <footer className="bg-[hsl(223,42%,8%)] text-[hsl(38,31%,90%)]">
+        <footer className="bg-[hsl(223,42%,8%)] text-white/90">
           <div className="gold-rule" />
           <div className="container mx-auto px-4 md:px-6 py-14">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
               <div className="space-y-4">
                 <Logo variant="light" />
-                <p className="text-sm text-[hsl(38,20%,73%)] leading-relaxed max-w-xs">
+                <p className="text-sm text-white/65 leading-relaxed max-w-xs">
                   Full-service tax filing and compliance support built for salaried professionals,
                   founders, and growing businesses.
                 </p>
@@ -149,8 +149,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               </div>
 
               <div>
-                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-[hsl(38,25%,80%)]">Platform</h4>
-                <ul className="space-y-2.5 text-sm text-[hsl(38,18%,72%)]">
+                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-white/75">Platform</h4>
+                <ul className="space-y-2.5 text-sm text-white/65">
                   <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
                   <li><Link href="/how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
                   <li><Link href="/dashboard" className="hover:text-white transition-colors">Client Dashboard</Link></li>
@@ -159,18 +159,18 @@ export default function Layout({ children }: { children: ReactNode }) {
               </div>
 
               <div>
-                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-[hsl(38,25%,80%)]">Services</h4>
-                <ul className="space-y-2.5 text-sm text-[hsl(38,18%,72%)]">
-                  <li><Link href="/services" className="hover:text-white transition-colors">Income Tax Filing</Link></li>
-                  <li><Link href="/services" className="hover:text-white transition-colors">GST Returns</Link></li>
-                  <li><Link href="/services" className="hover:text-white transition-colors">Business Registration</Link></li>
-                  <li><Link href="/services" className="hover:text-white transition-colors">Notice Management</Link></li>
+                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-white/75">Services</h4>
+                <ul className="space-y-2.5 text-sm text-white/65">
+                  <li><Link href="/services" className="hover:text-white transition-colors">Individual & Business Returns</Link></li>
+                  <li><Link href="/services" className="hover:text-white transition-colors">Sales Tax Compliance</Link></li>
+                  <li><Link href="/services" className="hover:text-white transition-colors">Business Entity Setup</Link></li>
+                  <li><Link href="/services" className="hover:text-white transition-colors">IRS & State Notice Response</Link></li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-[hsl(38,25%,80%)]">Company</h4>
-                <ul className="space-y-2.5 text-sm text-[hsl(38,18%,72%)]">
+                <h4 className="font-semibold text-sm uppercase tracking-[0.12em] mb-4 text-white/75">Company</h4>
+                <ul className="space-y-2.5 text-sm text-white/65">
                   <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
                   <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
@@ -179,7 +179,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               </div>
             </div>
 
-            <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[hsl(38,15%,65%)]">
+            <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/55">
               <p>Copyright {new Date().getFullYear()} Nurture Next. All rights reserved.</p>
               <p className="uppercase tracking-[0.16em]">Security first. Advisor led. Client focused.</p>
             </div>
@@ -189,3 +189,4 @@ export default function Layout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+

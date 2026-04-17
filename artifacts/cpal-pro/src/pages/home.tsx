@@ -38,26 +38,26 @@ const stats = [
 const services = [
   {
     icon: FileText,
-    title: "Income Tax Filing",
-    desc: "End-to-end filing for salaried, freelancers, and investors with advisor review.",
-    tag: "Starts INR 999",
+    title: "Individual & Business Returns",
+    desc: "End-to-end federal and state filing for employees, founders, and self-employed clients.",
+    tag: "Starts at $149",
   },
   {
     icon: Landmark,
-    title: "GST Compliance",
-    desc: "Monthly and quarterly GST workflows, reconciliations, and filing support.",
-    tag: "Starts INR 1499/mo",
+    title: "Sales Tax Compliance",
+    desc: "Multi-state sales tax registration, filings, reconciliations, and deadline tracking.",
+    tag: "Starts at $199/mo",
   },
   {
     icon: Layers3,
-    title: "Business Setup",
-    desc: "Pvt Ltd, LLP, and registrations with structured post-incorporation compliance.",
-    tag: "Starts INR 2999",
+    title: "Business Formation",
+    desc: "LLC and corporation setup with EIN registration and post-formation compliance support.",
+    tag: "Starts at $299",
   },
   {
     icon: ShieldCheck,
-    title: "Notice Response",
-    desc: "Practical drafting and advisor-led representation for tax and GST notices.",
+    title: "IRS & State Notices",
+    desc: "Practical drafting and CPA-led representation for federal and state tax notices.",
     tag: "Custom pricing",
   },
 ];
@@ -77,7 +77,7 @@ const process = [
   },
   {
     title: "Filing and support",
-    desc: "Get acknowledgements and post-filing assistance.",
+    desc: "Receive e-file confirmations and post-filing support.",
   },
 ];
 
@@ -106,10 +106,6 @@ export default function Home() {
   return (
     <div className="w-full">
       <section className="relative overflow-hidden bg-navy text-white pt-24 pb-20 md:pt-30 md:pb-24">
-        <div className="grain-overlay absolute inset-0 opacity-60" />
-        <div className="absolute -top-28 -left-16 w-80 h-80 rounded-full bg-primary/35 blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/22 blur-3xl" />
-
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
             <div>
@@ -118,7 +114,7 @@ export default function Home() {
                 variants={fadeUp}
                 initial="hidden"
                 animate="visible"
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.18em] text-[hsl(38,31%,87%)]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-[0.18em] text-white/80"
               >
                 <Sparkles className="w-3.5 h-3.5 text-gold" />
                 Advisor-led tax platform
@@ -139,7 +135,7 @@ export default function Home() {
                 variants={fadeUp}
                 initial="hidden"
                 animate="visible"
-                className="mt-6 text-lg text-[hsl(38,20%,80%)] max-w-xl leading-relaxed"
+                className="mt-6 text-lg text-white/80 max-w-xl leading-relaxed"
               >
                 Nurture Next combines advisor expertise with a clean digital workflow so your filing,
                 compliance, and follow-up are accurate, fast, and stress-free.
@@ -178,13 +174,13 @@ export default function Home() {
             </div>
 
             <motion.div custom={5} variants={fadeUp} initial="hidden" animate="visible" className="lg:justify-self-end w-full max-w-md">
-              <div className="rounded-3xl border border-white/16 panel-glass p-6 md:p-7 shadow-2xl">
+              <div className="rounded-3xl border border-white/16 bg-white/10 p-6 md:p-7 shadow-2xl">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <p className="text-xs uppercase tracking-[0.16em] text-white/65">Live case board</p>
-                    <h3 className="font-display text-xl font-semibold mt-1">FY 2025-26 filing</h3>
+                    <h3 className="font-display text-xl font-semibold mt-1">2025 federal return</h3>
                   </div>
-                  <span className="text-xs rounded-full bg-primary/25 text-[hsl(168,90%,75%)] px-3 py-1 font-semibold border border-primary/35">
+                  <span className="text-xs rounded-full bg-white/10 text-white/80 px-3 py-1 font-semibold border border-white/25">
                     In progress
                   </span>
                 </div>
@@ -198,7 +194,7 @@ export default function Home() {
                   ].map((step, idx) => (
                     <div key={step.label} className="flex items-center justify-between">
                       <span className="text-white/84">{idx + 1}. {step.label}</span>
-                      <span className={`text-xs font-semibold ${step.done ? "text-[hsl(168,90%,72%)]" : "text-white/55"}`}>
+                      <span className={`text-xs font-semibold ${step.done ? "text-white/75" : "text-white/55"}`}>
                         {step.done ? "Done" : "Pending"}
                       </span>
                     </div>
@@ -206,7 +202,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 h-2 rounded-full bg-white/10 overflow-hidden">
-                  <div className="h-full w-[62%] bg-gradient-to-r from-primary to-accent" />
+                  <div className="h-full w-[62%] bg-primary" />
                 </div>
                 <p className="text-xs text-white/65 mt-3">Estimated completion window: next 18-24 hours</p>
               </div>
@@ -220,10 +216,10 @@ export default function Home() {
           <div className="flex flex-wrap gap-4 items-center justify-between text-sm text-muted-foreground">
             <p className="font-semibold uppercase tracking-[0.14em] text-xs">As seen in</p>
             <div className="flex items-center gap-6 font-semibold">
-              <span>Economic Times</span>
-              <span>YourStory</span>
-              <span>Inc42</span>
-              <span>Business Standard</span>
+              <span>Forbes</span>
+              <span>Inc.</span>
+              <span>Bloomberg Tax</span>
+              <span>Accounting Today</span>
             </div>
           </div>
         </div>
@@ -301,7 +297,6 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
             <div className="rounded-3xl bg-navy text-white p-8 md:p-10 relative overflow-hidden">
-              <div className="absolute -top-10 -right-8 w-40 h-40 rounded-full bg-primary/25 blur-2xl" />
               <p className="text-xs uppercase tracking-[0.18em] text-gold">Why Nurture Next</p>
               <h3 className="mt-4 text-3xl md:text-4xl font-display font-bold leading-tight">
                 Advisor expertise with the speed of modern software.
@@ -388,10 +383,9 @@ export default function Home() {
       </section>
 
       <section className="py-22 bg-navy text-white text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(212,172,87,0.24),transparent_60%)]" />
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-3xl">
           <h2 className="text-4xl md:text-5xl font-display font-bold">Make tax season the easiest part of your year.</h2>
-          <p className="mt-5 text-[hsl(38,20%,80%)] text-lg leading-relaxed">
+          <p className="mt-5 text-white/80 text-lg leading-relaxed">
             Start with a quick discovery call and get a filing plan built for your exact income profile.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
@@ -412,3 +406,4 @@ export default function Home() {
     </div>
   );
 }
+
