@@ -44,13 +44,18 @@
   style.id = 'accumax-askfirm-widget-style';
   style.textContent =
     '.accumax-widget-root{position:fixed;right:' + offsetRight + 'px;bottom:' + offsetBottom + 'px;z-index:' + zIndex + ';font-family:Inter,Segoe UI,Arial,sans-serif;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}' +
-    '.accumax-widget-launcher{width:54px;height:54px;border-radius:999px;border:none;background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;transition:background .2s;}' +
-    '.accumax-widget-launcher:hover{background:#1c2840;}' +
+    '.accumax-widget-launcher{width:54px;height:54px;border-radius:999px;border:none;background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;transition:background .2s,transform .2s,box-shadow .2s;}' +
+    '.accumax-widget-launcher:hover{background:#1a2540;transform:scale(1.08);box-shadow:0 6px 20px rgba(0,0,0,.25);}' +
     '.accumax-widget-launcher:focus{outline:2px solid rgba(255,255,255,.30);outline-offset:2px;}' +
     '.accumax-widget-launcher svg{width:22px;height:22px;display:block;}' +
-    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 24px);height:' + height + 'px;max-height:calc(100vh - 96px);border-radius:16px;overflow:hidden;border:1px solid rgba(16,24,45,.20);opacity:0;pointer-events:none;transform:translateY(6px);transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;}' +
+    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 24px);height:' + height + 'px;max-height:calc(100vh - 96px);border-radius:16px;overflow:hidden;border:1px solid rgba(16,24,45,.20);opacity:0;pointer-events:none;transform:translateY(6px);transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.18);}' +
     '.accumax-widget-panel.is-open{opacity:1;pointer-events:auto;transform:translateY(0);}' +
     '.accumax-widget-iframe{width:100%;height:100%;border:none;display:block;}' +
+    '.accumax-widget-loader{position:absolute;inset:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:10;transition:opacity .3s ease;}' +
+    '.accumax-widget-loader.is-hidden{opacity:0;pointer-events:none;}' +
+    '.accumax-widget-spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.15);border-top-color:#ffffff;border-radius:50%;animation:accumax-spin .7s linear infinite;}' +
+    '.accumax-widget-loader-text{color:rgba(255,255,255,.55);font-size:13px;letter-spacing:.02em;}' +
+    '@keyframes accumax-spin{to{transform:rotate(360deg)}}' +
     '@media (max-width:640px){.accumax-widget-root{left:12px;right:12px;bottom:12px;align-items:stretch;}.accumax-widget-panel{width:auto;max-width:none;height:min(82vh,680px);max-height:none;}.accumax-widget-launcher{align-self:flex-end;}}';
   document.head.appendChild(style);
 
@@ -62,12 +67,25 @@
   panel.className = 'accumax-widget-panel';
   panel.setAttribute('aria-hidden', 'true');
 
+  /* Loading overlay — shown until iframe finishes loading */
+  var loader = document.createElement('div');
+  loader.className = 'accumax-widget-loader';
+  loader.innerHTML =
+    '<div class="accumax-widget-spinner"></div>' +
+    '<span class="accumax-widget-loader-text">Loading…</span>';
+  panel.appendChild(loader);
+
   var iframe = document.createElement('iframe');
   iframe.className = 'accumax-widget-iframe';
-  iframe.src = iframeSrc;
+  /* src is intentionally NOT set here — deferred to first open for fast page load */
   iframe.title = 'Chat';
-  iframe.loading = 'lazy';
   iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  iframe.setAttribute('allow', 'microphone; camera');
+
+  iframe.addEventListener('load', function () {
+    loader.classList.add('is-hidden');
+    setTimeout(function () { loader.style.display = 'none'; }, 350);
+  });
 
   panel.appendChild(iframe);
 
@@ -95,8 +113,17 @@
 
   /* ── Open / close ── */
   var open = false;
+  var iframeLoaded = false;
+
   function setOpen(next) {
     open = !!next;
+
+    /* On first open: inject the iframe src so the page starts loading */
+    if (open && !iframeLoaded) {
+      iframeLoaded = true;
+      iframe.src = iframeSrc;
+    }
+
     panel.classList.toggle('is-open', open);
     panel.setAttribute('aria-hidden', open ? 'false' : 'true');
     launcher.setAttribute('aria-label', open ? 'Close chat' : 'Open chat');
