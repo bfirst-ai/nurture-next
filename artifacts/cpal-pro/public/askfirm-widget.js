@@ -25,8 +25,8 @@
   var scriptOrigin = scriptSrc ? new URL(scriptSrc, window.location.href).origin : window.location.origin;
   var widgetBase   = (ds.widgetUrl || ds.baseUrl || scriptOrigin).replace(/\/$/, '');
   var widgetPath   = ds.path   || '/askfirm';
-  var primaryColor = ds.color  || '#10182d';
-  var textColor    = ds.textColor || '#FFFFFF';
+  var primaryColor = ds.color  || '#0f172a';
+  var textColor    = ds.textColor || '#f8fafc';
   var zIndex       = Number(ds.zIndex  || 2147483000);
   var offsetRight  = Number(ds.right   || 24);
   var offsetBottom = Number(ds.bottom  || 24);
@@ -44,11 +44,11 @@
   style.id = 'accumax-askfirm-widget-style';
   style.textContent =
     '.accumax-widget-root{position:fixed;right:' + offsetRight + 'px;bottom:' + offsetBottom + 'px;z-index:' + zIndex + ';font-family:Inter,Segoe UI,Arial,sans-serif;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}' +
-    '.accumax-widget-launcher{width:54px;height:54px;border-radius:999px;border:none;background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;transition:background .2s,transform .2s,box-shadow .2s;}' +
-    '.accumax-widget-launcher:hover{background:#1a2540;transform:scale(1.08);box-shadow:0 6px 20px rgba(0,0,0,.25);}' +
-    '.accumax-widget-launcher:focus{outline:2px solid rgba(255,255,255,.30);outline-offset:2px;}' +
+    '.accumax-widget-launcher{width:54px;height:54px;border-radius:999px;border:1px solid rgba(148,163,184,.20);background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;transition:background .2s,transform .2s,box-shadow .2s;box-shadow:0 6px 18px rgba(0,0,0,.35);}' +
+    '.accumax-widget-launcher:hover{background:#1e293b;transform:scale(1.08);box-shadow:0 8px 24px rgba(0,0,0,.45);}' +
+    '.accumax-widget-launcher:focus{outline:2px solid rgba(148,163,184,.45);outline-offset:2px;}' +
     '.accumax-widget-launcher svg{width:22px;height:22px;display:block;}' +
-    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 24px);height:' + height + 'px;max-height:calc(100vh - 96px);border-radius:16px;overflow:hidden;border:1px solid rgba(16,24,45,.20);opacity:0;pointer-events:none;transform:translateY(6px);transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.18);}' +
+    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 24px);height:' + height + 'px;max-height:calc(100vh - 96px);border-radius:16px;overflow:hidden;border:1px solid rgba(148,163,184,.18);background:#0f172a;opacity:0;pointer-events:none;transform:translateY(6px);transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;position:relative;box-shadow:0 12px 48px rgba(0,0,0,.55);}' +
     '.accumax-widget-panel.is-open{opacity:1;pointer-events:auto;transform:translateY(0);}' +
     '.accumax-widget-iframe{width:100%;height:100%;border:none;display:block;}' +
     '.accumax-widget-loader{position:absolute;inset:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:10;transition:opacity .3s ease;}' +
