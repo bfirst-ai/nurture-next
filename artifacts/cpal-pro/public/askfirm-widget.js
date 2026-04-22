@@ -25,7 +25,7 @@
   var scriptOrigin = scriptSrc ? new URL(scriptSrc, window.location.href).origin : window.location.origin;
   var widgetBase   = (ds.widgetUrl || ds.baseUrl || scriptOrigin).replace(/\/$/, '');
   var widgetPath   = ds.path   || '/askfirm';
-  var primaryColor = ds.color  || '#3abff8';
+  var primaryColor = ds.color  || '#3abff8'; 
   var textColor    = ds.textColor || '#ffffff';
   var zIndex       = Number(ds.zIndex  || 2147483000);
   var offsetRight  = Number(ds.right   || 24);
@@ -33,48 +33,50 @@
   var width        = Number(ds.width   || 420);
   var height       = Number(ds.height  || 680);
   var autoOpen     = boolValue(ds.autoOpen, false);
+  var firmName     = ds.firmName || 'Nurture Next';
 
   var iframeSrc = widgetBase + widgetPath + (widgetPath.indexOf('?') >= 0 ? '&' : '?') + 'embed=1';
 
-  /* ── Launcher chat SVG ── */
-  var SVG_CHAT = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223Z" clip-rule="evenodd"/></svg>';
+  var SVG_CHAT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+  var SVG_CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+  var SVG_FULLSCREEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
 
   /* ── Styles ── */
   var style = document.createElement('style');
   style.id = 'accumax-askfirm-widget-style';
   style.textContent =
-    '.accumax-widget-root{position:fixed;right:' + offsetRight + 'px;bottom:' + offsetBottom + 'px;z-index:' + zIndex + ';font-family:Inter,Segoe UI,Arial,sans-serif;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}' +
-    '.accumax-widget-launcher{width:54px;height:54px;border-radius:999px;border:1px solid rgba(148,163,184,.20);background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:0;transition:background .2s,transform .2s,box-shadow .2s;box-shadow:0 6px 18px rgba(0,0,0,.35);}' +
-    '.accumax-widget-launcher:hover{background:#0ea5e9;transform:scale(1.08);box-shadow:0 8px 24px rgba(58,191,248,.45);}' +
-    '.accumax-widget-launcher:focus{outline:2px solid rgba(148,163,184,.45);outline-offset:2px;}' +
-    '.accumax-widget-launcher svg{width:22px;height:22px;display:block;}' +
-    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 24px);height:' + height + 'px;max-height:calc(100vh - 96px);border-radius:16px;overflow:hidden;border:1px solid rgba(148,163,184,.18);background:#0f172a;opacity:0;pointer-events:none;transform:translateY(6px);transform-origin:bottom right;transition:opacity .18s ease,transform .18s ease;position:relative;box-shadow:0 12px 48px rgba(0,0,0,.55);}' +
-    '.accumax-widget-panel.is-open{opacity:1;pointer-events:auto;transform:translateY(0);}' +
-    '.accumax-widget-iframe{width:100%;height:100%;border:none;display:block;}' +
-    '.accumax-widget-loader{position:absolute;inset:0;background:#0f172a;display:flex;flex-direction:column;z-index:10;transition:opacity .3s ease;overflow:hidden;}' +
+    '.accumax-widget-root{position:fixed;right:' + offsetRight + 'px;bottom:' + offsetBottom + 'px;z-index:' + zIndex + ';font-family:"Poppins","Inter",sans-serif;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}' +
+    '.accumax-widget-launcher{width:60px;height:60px;border-radius:20px;border:none;background:' + primaryColor + ';color:' + textColor + ';cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 25px rgba(58,191,248,.3);position:relative;}' +
+    '.accumax-widget-launcher:hover{transform:scale(1.05) translateY(-2px);box-shadow:0 12px 30px rgba(58,191,248,.4);}' +
+    '.accumax-widget-launcher svg{width:28px;height:28px;display:block;transition:transform .3s ease;}' +
+    '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 32px);height:' + height + 'px;max-height:calc(100vh - 120px);border-radius:24px;overflow:hidden;border:1px solid rgba(226,232,240,.8);background:#ffffff;opacity:0;pointer-events:none;transform:translateY(20px) scale(0.95);transform-origin:bottom right;transition:all .4s cubic-bezier(.2,0,.2,1);position:relative;box-shadow:0 20px 50px rgba(15,23,42,.15);display:flex;flex-direction:column;}' +
+    '.accumax-widget-panel.is-open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}' +
+    '.accumax-widget-header{height:64px;background:' + primaryColor + ';padding:0 16px;display:flex;align-items:center;justify-content:space-between;color:#000000;flex-shrink:0;z-index:20;}' +
+    '.accumax-widget-header-info{display:flex;align-items:center;gap:10px;}' +
+    '.accumax-widget-header-dot{width:10px;height:10px;background:#22c55e;border-radius:50%;border:2px solid rgba(0,0,0,0.2);}' +
+    '.accumax-widget-header-title{font-size:15px;font-weight:700;letter-spacing:-0.01em;}' +
+    '.accumax-widget-header-actions{display:flex;align-items:center;gap:8px;}' +
+    '.accumax-widget-header-btn{background:rgba(0,0,0,0.08);border:none;color:#000000;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s ease;padding:0;}' +
+    '.accumax-widget-header-btn:hover{background:rgba(0,0,0,0.15);transform:scale(1.05);}' +
+    '.accumax-widget-header-btn svg{width:16px;height:16px;}' +
+    '.accumax-widget-iframe{flex:1;width:100%;border:none;display:block;background:#f3f4f6;}' +
+    '.accumax-widget-loader{position:absolute;inset:64px 0 0 0;background:#ffffff;display:flex;flex-direction:column;z-index:10;transition:opacity .4s ease;overflow:hidden;}' +
     '.accumax-widget-loader.is-hidden{opacity:0;pointer-events:none;}' +
     '@keyframes accumax-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}' +
-    '.accumax-skel-bar{background:linear-gradient(90deg,#1e293b 25%,#2d3f55 50%,#1e293b 75%);background-size:1200px 100%;animation:accumax-shimmer 1.6s infinite linear;border-radius:6px;flex-shrink:0;}' +
-    '.accumax-skel-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}' +
-    '.accumax-skel-avatar{width:40px;height:40px;border-radius:8px;}' +
-    '.accumax-skel-info{display:flex;flex-direction:column;gap:7px;flex:1;}' +
-    '.accumax-skel-name{height:13px;width:110px;}' +
-    '.accumax-skel-status{height:9px;width:52px;}' +
-    '.accumax-skel-messages{flex:1;padding:20px 14px 12px;display:flex;flex-direction:column;gap:18px;overflow:hidden;}' +
-    '.accumax-skel-msg{display:flex;align-items:flex-end;gap:8px;}' +
+    '.accumax-skel-bar{background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);background-size:1200px 100%;animation:accumax-shimmer 1.6s infinite linear;border-radius:6px;flex-shrink:0;}' +
+    '.accumax-skel-messages{flex:1;padding:24px 16px;display:flex;flex-direction:column;gap:20px;overflow:hidden;background:#f9fafb;}' +
+    '.accumax-skel-msg{display:flex;align-items:flex-end;gap:10px;}' +
     '.accumax-skel-msg--user{flex-direction:row-reverse;}' +
-    '.accumax-skel-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;}' +
-    '.accumax-skel-bubble-wrap{display:flex;flex-direction:column;gap:7px;}' +
-    '.accumax-skel-bubble{height:13px;border-radius:10px;}' +
-    '.accumax-skel-bubble--xl{width:200px;}' +
-    '.accumax-skel-bubble--lg{width:160px;}' +
-    '.accumax-skel-bubble--md{width:120px;}' +
-    '.accumax-skel-bubble--sm{width:88px;}' +
-    '.accumax-skel-bubble--xs{width:60px;}' +
-    '.accumax-skel-input-area{display:flex;align-items:center;gap:8px;padding:10px 14px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}' +
-    '.accumax-skel-input{flex:1;height:44px;border-radius:10px;}' +
-    '.accumax-skel-send{width:44px;height:44px;border-radius:50%;flex-shrink:0;}' +
-    '@media (max-width:640px){.accumax-widget-root{left:12px;right:12px;bottom:12px;align-items:stretch;}.accumax-widget-panel{width:auto;max-width:none;height:min(82vh,680px);max-height:none;}.accumax-widget-launcher{align-self:flex-end;}}';
+    '.accumax-skel-dot{width:32px;height:32px;border-radius:10px;flex-shrink:0;}' +
+    '.accumax-skel-bubble-wrap{display:flex;flex-direction:column;gap:8px;}' +
+    '.accumax-skel-bubble{height:14px;border-radius:12px;}' +
+    '.accumax-skel-bubble--xl{width:220px;}' +
+    '.accumax-skel-bubble--lg{width:180px;}' +
+    '.accumax-skel-bubble--md{width:140px;}' +
+    '.accumax-skel-input-area{display:flex;align-items:center;gap:12px;padding:16px 20px 24px;border-top:1px solid rgba(0,0,0,.04);flex-shrink:0;background:#ffffff;}' +
+    '.accumax-skel-input{flex:1;height:44px;border-radius:22px;}' +
+    '.accumax-skel-send{width:44px;height:44px;border-radius:14px;flex-shrink:0;}' +
+    '@media (max-width:640px){.accumax-widget-root{left:12px;right:12px;bottom:12px;gap:10px;}.accumax-widget-panel{width:auto;max-width:none;height:calc(100vh - 100px);border-radius:24px;}.accumax-widget-launcher{width:56px;height:56px;}}';
   document.head.appendChild(style);
 
   /* ── DOM ── */
@@ -85,17 +87,34 @@
   panel.className = 'accumax-widget-panel';
   panel.setAttribute('aria-hidden', 'true');
 
-  /* Loading overlay — shown until iframe finishes loading */
+  /* Header */
+  var header = document.createElement('div');
+  header.className = 'accumax-widget-header';
+  header.innerHTML = 
+    '<div class="accumax-widget-header-info">' +
+      '<div class="accumax-widget-header-dot"></div>' +
+      '<div class="accumax-widget-header-title">' + firmName + ' Assistant</div>' +
+    '</div>' +
+    '<div class="accumax-widget-header-actions">' +
+      '<button class="accumax-widget-header-btn accumax-widget-zoom" title="Open Fullscreen">' + SVG_FULLSCREEN + '</button>' +
+      '<button class="accumax-widget-header-btn accumax-widget-close" title="Close">' + SVG_CLOSE + '</button>' +
+    '</div>';
+  panel.appendChild(header);
+
+  header.querySelector('.accumax-widget-close').addEventListener('click', function(e) {
+    e.stopPropagation();
+    setOpen(false);
+  });
+
+  header.querySelector('.accumax-widget-zoom').addEventListener('click', function(e) {
+    e.stopPropagation();
+    window.open(widgetBase + widgetPath, '_blank', 'noopener,noreferrer');
+  });
+
+  /* Loading overlay */
   var loader = document.createElement('div');
   loader.className = 'accumax-widget-loader';
   loader.innerHTML =
-    '<div class="accumax-skel-header">' +
-      '<div class="accumax-skel-bar accumax-skel-avatar"></div>' +
-      '<div class="accumax-skel-info">' +
-        '<div class="accumax-skel-bar accumax-skel-name"></div>' +
-        '<div class="accumax-skel-bar accumax-skel-status"></div>' +
-      '</div>' +
-    '</div>' +
     '<div class="accumax-skel-messages">' +
       '<div class="accumax-skel-msg">' +
         '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
@@ -110,20 +129,6 @@
           '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--md"></div>' +
         '</div>' +
       '</div>' +
-      '<div class="accumax-skel-msg">' +
-        '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
-        '<div class="accumax-skel-bubble-wrap">' +
-          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--lg"></div>' +
-          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--md"></div>' +
-          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--xs"></div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="accumax-skel-msg accumax-skel-msg--user">' +
-        '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
-        '<div class="accumax-skel-bubble-wrap">' +
-          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--sm"></div>' +
-        '</div>' +
-      '</div>' +
     '</div>' +
     '<div class="accumax-skel-input-area">' +
       '<div class="accumax-skel-bar accumax-skel-input"></div>' +
@@ -133,14 +138,13 @@
 
   var iframe = document.createElement('iframe');
   iframe.className = 'accumax-widget-iframe';
-  /* src is intentionally NOT set here — deferred to first open for fast page load */
   iframe.title = 'Chat';
   iframe.referrerPolicy = 'strict-origin-when-cross-origin';
   iframe.setAttribute('allow', 'microphone; camera');
 
   iframe.addEventListener('load', function () {
     loader.classList.add('is-hidden');
-    setTimeout(function () { loader.style.display = 'none'; }, 350);
+    setTimeout(function () { loader.style.display = 'none'; }, 450);
   });
 
   panel.appendChild(iframe);
@@ -164,9 +168,9 @@
       window.open(widgetBase + widgetPath, '_blank', 'noopener,noreferrer');
       return;
     }
-    if (data.type === 'askfirm-config' && data.payload) {
-      var dbTitle = data.payload.chatbotName || data.payload.customerName;
-      if (dbTitle) iframe.title = String(dbTitle) + ' Chat';
+    if (data.type === 'askfirm-config' && data.payload && data.payload.chatbotName) {
+      var titleEl = header.querySelector('.accumax-widget-header-title');
+      if (titleEl) titleEl.textContent = data.payload.chatbotName + ' Assistant';
     }
   }
   window.addEventListener('message', onWidgetMessage);
@@ -178,7 +182,6 @@
   function setOpen(next) {
     open = !!next;
 
-    /* On first open: inject the iframe src so the page starts loading */
     if (open && !iframeLoaded) {
       iframeLoaded = true;
       iframe.src = iframeSrc;
@@ -187,6 +190,14 @@
     panel.classList.toggle('is-open', open);
     panel.setAttribute('aria-hidden', open ? 'false' : 'true');
     launcher.setAttribute('aria-label', open ? 'Close chat' : 'Open chat');
+    
+    if (open) {
+      launcher.innerHTML = SVG_CLOSE;
+      launcher.style.transform = 'rotate(90deg)';
+    } else {
+      launcher.innerHTML = SVG_CHAT;
+      launcher.style.transform = '';
+    }
   }
 
   launcher.addEventListener('click', function () { setOpen(!open); });
@@ -199,10 +210,13 @@
     open:    function () { setOpen(true); },
     close:   function () { setOpen(false); },
     toggle:  function () { setOpen(!open); },
+    setTitle: function (newTitle) {
+      var titleEl = header.querySelector('.accumax-widget-header-title');
+      if (titleEl) titleEl.textContent = newTitle + ' Assistant';
+    },
     destroy: function () {
       if (root.parentNode)  root.parentNode.removeChild(root);
       if (style.parentNode) style.parentNode.removeChild(style);
-      window.removeEventListener('message', onWidgetMessage);
       delete window.AccumaxChatWidget;
       delete window.__ACCUMAX_ASKFIRM_WIDGET_LOADED__;
     }

@@ -6,6 +6,8 @@ import Logo from "./Logo";
 import { Button } from "./ui/button";
 import AskfirmWidgetEmbed from "./AskfirmWidgetEmbed";
 
+import { useTheme } from "./ThemeProvider";
+
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
@@ -18,15 +20,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    try { return localStorage.getItem("nurture-next-theme") !== "light"; } catch { return true; }
-  });
-
-  useEffect(() => {
-    try { localStorage.setItem("nurture-next-theme", isDark ? "dark" : "light"); } catch {}
-  }, [isDark]);
-
-  const toggleTheme = () => setIsDark(prev => !prev);
+  const { theme, setTheme } = useTheme();
+  
+  const isDark = theme === "dark";
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
 
   const isAuthPage = location === "/login" || location === "/signup";
 
@@ -41,7 +38,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, [location]);
 
   return (
-    <div className={`min-h-[100dvh] w-full selection:bg-primary/20 selection:text-primary flex flex-col bg-background text-foreground${isDark ? " dark" : ""}`}>
+    <div className="min-h-[100dvh] w-full selection:bg-primary/20 selection:text-primary flex flex-col bg-background text-foreground">
       {!isAuthPage && (
         <>
           <div className="h-9 bg-navy text-white/90 text-xs">
