@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-type Theme = "dark" | "light" | "system";
+type Theme = "dark" | "light";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -13,51 +13,50 @@ type ThemeProviderState = {
   setTheme: (theme: Theme) => void;
 };
 
-const initialState: ThemeProviderState = {
-  theme: "system",
+const ThemeProviderContext = createContext<ThemeProviderState>({
+  theme: "dark",
   setTheme: () => null,
-};
+});
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  root.classList.remove("light", "dark");
+  root.classList.add(theme);
+}
 
 export function ThemeProvider({
   children,
   defaultTheme = "dark",
   storageKey = "nurture-next-theme",
-  ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => ((localStorage.getItem(storageKey) as Theme) === "dark" ? "dark" : defaultTheme)
-  );
+  const [theme, setThemeState] = useState<Theme>(() => {
+    const stored = localStorage.getItem(storageKey) as Theme | null;
+    const resolved = stored === "light" || stored === "dark" ? stored : defaultTheme;
+    // Apply synchronously to prevent flash of unstyled content
+    applyTheme(resolved);
+    return resolved;
+  });
 
+  // Keep DOM class in sync whenever theme changes after mount
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-    root.classList.add("dark");
-    if (theme !== "dark") {
-      localStorage.setItem(storageKey, "dark");
-      setTheme("dark");
-    }
+    applyTheme(theme);
   }, [theme]);
 
-  const value = {
-    theme,
-    setTheme: (_theme: Theme) => {
-      localStorage.setItem(storageKey, "dark");
-      setTheme("dark");
+  const setTheme = useCallback(
+    (newTheme: Theme) => {
+      localStorage.setItem(storageKey, newTheme);
+      setThemeState(newTheme);
     },
-  };
+    [storageKey],
+  );
+
+  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   );
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-  return context;
-};
+export const useTheme = () => useContext(ThemeProviderContext);

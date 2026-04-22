@@ -24,7 +24,7 @@ export default function AskfirmWidgetEmbed() {
     script.async = true;
     script.dataset.widgetUrl = WIDGET_URL;
     script.dataset.path = "/askfirm";
-    script.dataset.color = "#10182d";
+    script.dataset.color = "#3abff8";
     script.dataset.textColor = "#FFFFFF";
 
     document.body.appendChild(script);

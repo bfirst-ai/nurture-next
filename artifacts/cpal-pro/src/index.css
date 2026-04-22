@@ -335,6 +335,10 @@
     background-color: hsl(224 47% 12%);
   }
 
+  .bg-navy:not(:is(.dark *)) {
+    background-color: hsl(var(--primary));
+  }
+
   .bg-cream {
     background-color: hsl(220 12% 92%);
   }

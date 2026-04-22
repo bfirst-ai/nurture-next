@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Menu, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, Menu, Moon, ShieldCheck, Sun, X } from "lucide-react";
 
 import Logo from "./Logo";
 import { Button } from "./ui/button";
@@ -18,6 +18,15 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    try { return localStorage.getItem("nurture-next-theme") !== "light"; } catch { return true; }
+  });
+
+  useEffect(() => {
+    try { localStorage.setItem("nurture-next-theme", isDark ? "dark" : "light"); } catch {}
+  }, [isDark]);
+
+  const toggleTheme = () => setIsDark(prev => !prev);
 
   const isAuthPage = location === "/login" || location === "/signup";
 
@@ -32,7 +41,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, [location]);
 
   return (
-    <div className="min-h-[100dvh] w-full selection:bg-primary/20 selection:text-primary flex flex-col">
+    <div className={`min-h-[100dvh] w-full selection:bg-primary/20 selection:text-primary flex flex-col bg-background text-foreground${isDark ? " dark" : ""}`}>
       {!isAuthPage && (
         <>
           <div className="h-9 bg-navy text-white/90 text-xs">
@@ -79,6 +88,26 @@ export default function Layout({ children }: { children: ReactNode }) {
               </nav>
 
               <div className="flex items-center gap-2">
+                {/* Theme toggle */}
+                <button
+                  onClick={toggleTheme}
+                  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                  className="relative flex items-center w-[52px] h-7 rounded-full border border-border bg-muted/60 hover:bg-muted transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring flex-shrink-0"
+                >
+                  <span
+                    className={`absolute left-0.5 flex items-center justify-center w-6 h-6 rounded-full shadow-sm transition-all duration-300 ${
+                      isDark
+                        ? "translate-x-6 bg-primary"
+                        : "translate-x-0 bg-background border border-border/60"
+                    }`}
+                  >
+                    {isDark
+                      ? <Moon className="w-3 h-3 text-primary-foreground" />
+                      : <Sun className="w-3 h-3 text-amber-500" />
+                    }
+                  </span>
+                </button>
+
                 <Link
                   href="/login"
                   className="hidden md:inline-flex text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors px-3"
@@ -123,6 +152,18 @@ export default function Layout({ children }: { children: ReactNode }) {
                       <Link href="/get-started">Start filing</Link>
                     </Button>
                   </div>
+                  <button
+                    onClick={toggleTheme}
+                    className="mt-1 w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-foreground hover:bg-muted transition-colors border border-border/50"
+                    aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                  >
+                    <span>{isDark ? "Light mode" : "Dark mode"}</span>
+                    <span className="relative flex items-center w-[52px] h-7 rounded-full border border-border bg-muted/60">
+                      <span className={`absolute left-0.5 flex items-center justify-center w-6 h-6 rounded-full shadow-sm transition-all duration-300 ${isDark ? "translate-x-6 bg-primary" : "translate-x-0 bg-background border border-border/60"}`}>
+                        {isDark ? <Moon className="w-3 h-3 text-primary-foreground" /> : <Sun className="w-3 h-3 text-amber-500" />}
+                      </span>
+                    </span>
+                  </button>
                 </div>
               </div>
             )}
