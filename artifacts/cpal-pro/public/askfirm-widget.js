@@ -54,20 +54,42 @@
     '.accumax-widget-panel{width:' + width + 'px;max-width:calc(100vw - 32px);height:' + height + 'px;max-height:calc(100vh - 120px);border-radius:24px;overflow:hidden;border:1px solid rgba(226,232,240,.8);background:#ffffff;opacity:0;pointer-events:none;transform:translateY(20px) scale(0.95);transform-origin:bottom right;transition:all .4s cubic-bezier(.2,0,.2,1);position:relative;box-shadow:0 20px 50px rgba(15,23,42,.15);display:flex;flex-direction:column;}' +
     '.accumax-widget-panel.is-open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}' +
     '.accumax-widget-iframe{flex:1;width:100%;border:none;display:block;background:#ffffff;}' +
+    /* ── Loader overlay ── */
     '.accumax-widget-loader{position:absolute;inset:0;background:#ffffff;display:flex;flex-direction:column;z-index:10;transition:opacity .4s ease;overflow:hidden;}' +
     '.accumax-widget-loader.is-hidden{opacity:0;pointer-events:none;}' +
+    /* Shimmer keyframe */
     '@keyframes accumax-shimmer{0%{background-position:-600px 0}100%{background-position:600px 0}}' +
+    '@keyframes accumax-pulse-dot{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}' +
+    /* Base shimmer bar */
     '.accumax-skel-bar{background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);background-size:1200px 100%;animation:accumax-shimmer 1.6s infinite linear;border-radius:6px;flex-shrink:0;}' +
-    '.accumax-skel-messages{flex:1;padding:24px 16px;display:flex;flex-direction:column;gap:20px;overflow:hidden;background:#f9fafb;}' +
+    /* Navbar skeleton */
+    '.accumax-skel-nav{height:64px;background:#fff;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;}' +
+    '.accumax-skel-nav-avatar{width:38px;height:38px;border-radius:12px;flex-shrink:0;}' +
+    '.accumax-skel-nav-lines{display:flex;flex-direction:column;gap:6px;flex:1;}' +
+    '.accumax-skel-nav-name{height:13px;width:110px;border-radius:6px;}' +
+    '.accumax-skel-nav-sub{height:10px;width:80px;border-radius:6px;}' +
+    /* Messages area */
+    '.accumax-skel-messages{flex:1;padding:20px 16px;display:flex;flex-direction:column;gap:22px;overflow:hidden;background:#f9fafb;}' +
     '.accumax-skel-msg{display:flex;align-items:flex-end;gap:10px;}' +
     '.accumax-skel-msg--user{flex-direction:row-reverse;}' +
     '.accumax-skel-dot{width:32px;height:32px;border-radius:10px;flex-shrink:0;}' +
-    '.accumax-skel-bubble-wrap{display:flex;flex-direction:column;gap:8px;}' +
-    '.accumax-skel-bubble{height:14px;border-radius:12px;}' +
-    '.accumax-skel-bubble--xl{width:220px;}' +
-    '.accumax-skel-bubble--lg{width:180px;}' +
-    '.accumax-skel-bubble--md{width:140px;}' +
-    '.accumax-skel-input-area{display:flex;align-items:center;gap:12px;padding:16px 20px 24px;border-top:1px solid rgba(0,0,0,.04);flex-shrink:0;background:#ffffff;}' +
+    '.accumax-skel-bubble-wrap{display:flex;flex-direction:column;gap:7px;}' +
+    '.accumax-skel-bubble{height:13px;border-radius:12px;}' +
+    '.accumax-skel-bubble--xl{width:200px;}' +
+    '.accumax-skel-bubble--lg{width:160px;}' +
+    '.accumax-skel-bubble--md{width:120px;}' +
+    '.accumax-skel-bubble--sm{width:90px;}' +
+    /* Typing dots bubble */
+    '.accumax-skel-typing{display:flex;align-items:flex-end;gap:10px;}' +
+    '.accumax-skel-typing-bubble{background:#fff;border:1px solid #e2e8f0;border-radius:4px 18px 18px 18px;padding:14px 18px;display:flex;align-items:center;gap:5px;box-shadow:0 1px 3px rgba(0,0,0,.05);}' +
+    '.accumax-skel-typing-bubble span{width:7px;height:7px;border-radius:50%;background:#94a3b8;display:inline-block;}' +
+    '.accumax-skel-typing-bubble span:nth-child(1){animation:accumax-pulse-dot 1.2s .0s infinite ease-in-out;}' +
+    '.accumax-skel-typing-bubble span:nth-child(2){animation:accumax-pulse-dot 1.2s .2s infinite ease-in-out;}' +
+    '.accumax-skel-typing-bubble span:nth-child(3){animation:accumax-pulse-dot 1.2s .4s infinite ease-in-out;}' +
+    /* Status label */
+    '.accumax-skel-status{text-align:center;font-size:11px;font-weight:600;color:#94a3b8;letter-spacing:.04em;padding:6px 0 2px;flex-shrink:0;background:#f9fafb;}' +
+    /* Input area */
+    '.accumax-skel-input-area{display:flex;align-items:center;gap:12px;padding:14px 18px 20px;border-top:1px solid rgba(0,0,0,.04);flex-shrink:0;background:#ffffff;}' +
     '.accumax-skel-input{flex:1;height:44px;border-radius:22px;}' +
     '.accumax-skel-send{width:44px;height:44px;border-radius:14px;flex-shrink:0;}' +
     '@media (max-width:640px){.accumax-widget-root{left:12px;right:12px;bottom:12px;gap:10px;}.accumax-widget-panel{width:auto;max-width:none;height:calc(100vh - 100px);border-radius:24px;}.accumax-widget-launcher{width:56px;height:56px;}}';
@@ -86,7 +108,17 @@
   var loader = document.createElement('div');
   loader.className = 'accumax-widget-loader';
   loader.innerHTML =
+    /* Navbar skeleton */
+    '<div class="accumax-skel-nav">' +
+      '<div class="accumax-skel-bar accumax-skel-nav-avatar accumax-skel-dot"></div>' +
+      '<div class="accumax-skel-nav-lines">' +
+        '<div class="accumax-skel-bar accumax-skel-nav-name"></div>' +
+        '<div class="accumax-skel-bar accumax-skel-nav-sub"></div>' +
+      '</div>' +
+    '</div>' +
+    /* Messages */
     '<div class="accumax-skel-messages">' +
+      /* AI message 1 */
       '<div class="accumax-skel-msg">' +
         '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
         '<div class="accumax-skel-bubble-wrap">' +
@@ -94,13 +126,39 @@
           '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--lg"></div>' +
         '</div>' +
       '</div>' +
+      /* User message */
       '<div class="accumax-skel-msg accumax-skel-msg--user">' +
         '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
         '<div class="accumax-skel-bubble-wrap">' +
           '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--md"></div>' +
         '</div>' +
       '</div>' +
+      /* AI message 2 */
+      '<div class="accumax-skel-msg">' +
+        '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
+        '<div class="accumax-skel-bubble-wrap">' +
+          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--lg"></div>' +
+          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--xl"></div>' +
+          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--sm"></div>' +
+        '</div>' +
+      '</div>' +
+      /* User message 2 */
+      '<div class="accumax-skel-msg accumax-skel-msg--user">' +
+        '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
+        '<div class="accumax-skel-bubble-wrap">' +
+          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--lg"></div>' +
+          '<div class="accumax-skel-bar accumax-skel-bubble accumax-skel-bubble--sm"></div>' +
+        '</div>' +
+      '</div>' +
+      /* Typing indicator (live animated) */
+      '<div class="accumax-skel-typing">' +
+        '<div class="accumax-skel-bar accumax-skel-dot"></div>' +
+        '<div class="accumax-skel-typing-bubble"><span></span><span></span><span></span></div>' +
+      '</div>' +
+      /* Status text */
+      '<div class="accumax-skel-status">Connecting to AI assistant...</div>' +
     '</div>' +
+    /* Input area */
     '<div class="accumax-skel-input-area">' +
       '<div class="accumax-skel-bar accumax-skel-input"></div>' +
       '<div class="accumax-skel-bar accumax-skel-send"></div>' +
