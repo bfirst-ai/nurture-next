@@ -20,12 +20,10 @@ export default function AskfirmWidgetEmbed() {
 
     const script = document.createElement("script");
     script.id = SCRIPT_ID;
-    script.src = "/askfirm-widget.js";
+    script.src = WIDGET_URL + "/askfirm-widget.js?v=" + Date.now();
     script.async = true;
     script.dataset.widgetUrl = WIDGET_URL;
     script.dataset.path = "/askfirm";
-    script.dataset.color = "#3abff8";
-    script.dataset.textColor = "#FFFFFF";
 
     document.body.appendChild(script);
 
