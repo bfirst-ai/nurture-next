@@ -2,6 +2,25 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+.accumax-widget-root {
+  pointer-events: none !important;
+}
+.accumax-widget-root > * {
+  pointer-events: auto;
+}
+.accumax-widget-root {
+  top: auto !important;
+  left: auto !important;
+  inset: auto 24px 24px auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+.accumax-widget-root .accumax-widget-panel {
+  position: absolute !important;
+  bottom: 80px !important;
+  right: 0 !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

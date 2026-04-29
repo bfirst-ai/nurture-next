@@ -4,6 +4,7 @@ import { ArrowRight, Menu, ShieldCheck, X } from "lucide-react";
 
 import Logo from "./Logo";
 import { Button } from "./ui/button";
+import { buttonVariants } from "./ui/button";
 import AskfirmWidgetEmbed from "./AskfirmWidgetEmbed";
 
 const navLinks = [
@@ -48,7 +49,8 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <header
-            className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+            style={{ zIndex: 9999 }}
+            className={`sticky top-0 border-b transition-all duration-300 isolate ${
               scrolled
                 ? "bg-background/92 border-border/70"
                 : "bg-background/72 border-transparent"
@@ -78,16 +80,21 @@ export default function Layout({ children }: { children: ReactNode }) {
                 })}
               </nav>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 relative" style={{ zIndex: 2147483647 }}>
                 <Link
                   href="/login"
-                  className="hidden md:inline-flex text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors px-3"
+                  className="inline-flex items-center justify-center h-9 md:h-10 px-3 md:px-5 rounded-full text-xs md:text-sm font-semibold cursor-pointer border border-border bg-transparent text-foreground hover:bg-muted transition-colors no-underline whitespace-nowrap"
                 >
                   Sign in
                 </Link>
-                <Button asChild size="sm" className="hidden md:inline-flex rounded-full h-10 px-5 font-semibold">
-                  <Link href="/get-started">Start filing</Link>
-                </Button>
+                <a
+                  href="https://accumax-client-portal.azurewebsites.net/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center h-9 md:h-10 px-3 md:px-5 rounded-full text-xs md:text-sm font-semibold cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 transition-colors no-underline whitespace-nowrap"
+                >
+                  Client center
+                </a>
 
                 <button
                   className="md:hidden w-9 h-9 rounded-lg border border-border/80 flex items-center justify-center text-foreground"
@@ -115,14 +122,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                       {link.label}
                     </Link>
                   ))}
-                  <div className="pt-2 grid grid-cols-2 gap-2">
-                    <Button variant="outline" className="rounded-xl" asChild>
-                      <Link href="/login">Sign in</Link>
-                    </Button>
-                    <Button className="rounded-xl" asChild>
-                      <Link href="/get-started">Start filing</Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
             )}

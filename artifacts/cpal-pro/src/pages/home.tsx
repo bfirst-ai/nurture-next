@@ -144,16 +144,8 @@ export default function Home() {
               <motion.div custom={3} variants={fadeUp} initial="hidden" animate="visible" className="mt-9 flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="h-14 px-7 rounded-full text-base font-semibold" asChild>
                   <Link href="/get-started">
-                    Start consultation <ArrowRight className="ml-2 w-4 h-4" />
+                    Talk to an advisor <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-14 px-7 rounded-full text-base font-semibold border-white/35 text-white bg-transparent hover:bg-white/10"
-                  asChild
-                >
-                  <Link href="/contact">Talk to an advisor</Link>
                 </Button>
               </motion.div>
 
