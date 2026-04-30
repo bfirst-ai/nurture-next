@@ -106,10 +106,7 @@ export default function GetStarted() {
                       <Input id="phone" type="tel" required className="h-12 rounded-r-xl rounded-l-none bg-background flex-1" placeholder="(555) 123-4567" />
                     </div>
                   </div>
-                  <div className="space-y-3">
-                    <Label htmlFor="tax-id" className="text-foreground">SSN/ITIN (Last 4 digits, optional)</Label>
-                    <Input id="tax-id" className="h-12 rounded-xl bg-background uppercase" placeholder="1234" maxLength={4} />
-                  </div>
+
                 </motion.div>
               )}
 
