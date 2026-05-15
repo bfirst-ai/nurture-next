@@ -5,7 +5,7 @@ import { ArrowRight, Menu, ShieldCheck, X } from "lucide-react";
 import Logo from "./Logo";
 import { Button } from "./ui/button";
 import { buttonVariants } from "./ui/button";
-import AskfirmWidgetEmbed from "./AskfirmWidgetEmbed";
+import AskfirmChatbot from "./AskfirmChatbot";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -131,7 +131,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <main className="flex-1 flex flex-col">{children}</main>
 
-      {!isAuthPage && <AskfirmWidgetEmbed />}
+      {!isAuthPage && <AskfirmChatbot />}
 
       {!isAuthPage && (
         <footer className="bg-[hsl(223,42%,8%)] text-white/90">
