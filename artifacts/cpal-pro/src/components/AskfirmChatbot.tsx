@@ -38,6 +38,7 @@ const DEFAULT_FIRM_NAME = "Nurture Next";
 const DEFAULT_CHATBOT_NAME = "Nurture Next";
 const DEFAULT_CUSTOMER_WEBSITE = "";
 const DEFAULT_QUESTION_LIMIT = 5;
+const DEFAULT_CLIENT_PORTAL = "https://accumax-client-portal.azurewebsites.net/";
 
 interface FirmSettings {
   chatbotName: string;
@@ -49,6 +50,7 @@ interface FirmSettings {
   linkedinUrl: string;
   instagramUrl: string;
   calendlyUrl: string;
+  clientPortalUrl: string;
 }
 
 const normalizeText = (value: unknown, fallback: string): string => {
@@ -163,23 +165,14 @@ export default function AskfirmChatbot() {
     linkedinUrl: "",
     instagramUrl: "",
     calendlyUrl: "",
+    clientPortalUrl: DEFAULT_CLIENT_PORTAL,
   });
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     askfirmService
-      .getMultipleConfig([
-        "chatbotName",
-        "chatbotLogo",
-        "customerName",
-        "customerWebsite",
-        "askFirmQuestionLimit",
-        "facebookUrl",
-        "linkedinUrl",
-        "instagramUrl",
-        "calendlyUrl",
-      ])
+      .getWidgetConfig()
       .then((res) => {
         if (cancelled) return;
         const c = res?.configs ?? {};
@@ -194,6 +187,7 @@ export default function AskfirmChatbot() {
           linkedinUrl: normalizeText(c.linkedinUrl, ""),
           instagramUrl: normalizeText(c.instagramUrl, ""),
           calendlyUrl: normalizeText(c.calendlyUrl, ""),
+          clientPortalUrl: normalizeText(c.clientPortalUrl, prev.clientPortalUrl),
         }));
       })
       .catch(() => {
@@ -559,7 +553,7 @@ export default function AskfirmChatbot() {
                     type="button"
                     onClick={() =>
                       window.open(
-                        "https://accumax-client-portal.azurewebsites.net/",
+                        settings.clientPortalUrl || DEFAULT_CLIENT_PORTAL,
                         "_blank",
                         "noopener,noreferrer",
                       )
