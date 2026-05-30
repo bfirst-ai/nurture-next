@@ -24,14 +24,15 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Ask CPAL Lead Generation Widget — self-mounts a floating chat launcher
-         (isolated in a Shadow DOM). Bundle is built from react-client-portal
-         (`npm run build:widget`) and served from the client portal. Set
-         data-tenant to this site's firm slug. -->
+    <!-- Ask CPAL Lead Generation Widget — local bundle (copied from widget-test).
+         The deployed CDN URL at /widget/askcpal-widget.js currently returns the
+         client-portal SPA shell instead of the JS bundle, so we self-host here.
+         data-api points at the locally-running accumax-api on :3000. -->
     <script
-      src="https://accumax-client-portal.azurewebsites.net/widget/askcpal-widget.js"
+      src="/askcpal-widget.js?v=8"
       data-nn-widget
-      data-tenant="nurture-next"
+      data-tenant="teamtusharmt"
+      data-api="http://localhost:3000/api/v1"
       async
     ></script>
   </body>
