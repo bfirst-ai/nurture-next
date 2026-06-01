@@ -24,15 +24,28 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Ask CPAL Lead Generation Widget — local bundle (copied from widget-test).
-         The deployed CDN URL at /widget/askcpal-widget.js currently returns the
-         client-portal SPA shell instead of the JS bundle, so we self-host here.
-         data-api points at the locally-running accumax-api on :3000. -->
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Ask CPAL Lead Generation Widget — portable embed.
+
+         This is the canonical "paste on any website" snippet: a <script> with
+         just data-tenant. The bundle is fully self-contained (React + CSS + the
+         API URL are baked in), so it needs NOTHING else to run. It talks to the
+         public Ask CPAL API, whose widget endpoints allow any origin (CORS '*',
+         no cookies) — so the SAME snippet works on localhost, here in production,
+         and on any firm's site. Do NOT add a hardcoded data-api: a localhost URL
+         points every real visitor at their own machine and breaks the widget.
+
+         To host on another site: copy this <script> tag and serve askcpal-widget.js
+         from that site (or reference its public URL via an absolute src).
+
+         LOCAL-BACKEND DEV ONLY: to test against an accumax-api running on your own
+         machine, temporarily add  data-api="http://localhost:3000/api/v1"  to the
+         tag below. Never commit that — it must not ship to production.
+         ───────────────────────────────────────────────────────────────────── -->
     <script
       src="/askcpal-widget.js?v=8"
       data-nn-widget
       data-tenant="teamtusharmt"
-      data-api="http://localhost:3000/api/v1"
       async
     ></script>
   </body>
