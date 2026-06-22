@@ -32,7 +32,7 @@ const InstagramGlyph = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-import { askfirmService, type ChatHistoryItem } from "@/lib/askfirm.service";
+import { askfirmService, getApiBase, type ChatHistoryItem } from "@/lib/askfirm.service";
 
 const DEFAULT_FIRM_NAME = "Nurture Next";
 const DEFAULT_CHATBOT_NAME = "Nurture Next";
@@ -63,8 +63,12 @@ const normalizeLogoUrl = (logo: unknown): string => {
   if (typeof logo !== "string") return "";
   const value = logo.trim();
   if (!value) return "";
-  if (value.startsWith("assets/")) return `/${value}`;
-  return value;
+  // Already absolute URL — use as-is
+  if (value.startsWith("http://") || value.startsWith("https://") || value.startsWith("//")) return value;
+  // Relative path (e.g. "assets/logo.png") — resolve against the API server,
+  // not the host page, because the widget runs on arbitrary external domains.
+  const base = getApiBase().replace(/\/api\/v1\/?$/, "");
+  return `${base}/${value.replace(/^\//, "")}`;
 };
 
 interface ChatMessage {

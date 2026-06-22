@@ -4,6 +4,11 @@ let API_BASE: string = (() => {
   return "https://accumax-api.azurewebsites.net/api/v1";
 })();
 
+/** Returns the current API base URL — used to resolve relative asset paths from widget-config. */
+export function getApiBase(): string {
+  return API_BASE;
+}
+
 // Tenant slug for the multi-tenant API. Sent as the `Tenant` header so the
 // backend resolves the correct tenant DB (see accumax-api middlewares/tenant-db.js).
 // On the marketing site this stays null and the tenant is resolved by domain;
