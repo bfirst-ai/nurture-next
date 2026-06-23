@@ -25,27 +25,28 @@
     <script type="module" src="/src/main.tsx"></script>
 
     <!-- ─────────────────────────────────────────────────────────────────────
-         Ask CPAL Lead Generation Widget — portable embed.
+         Ask CPAL Lead Generation Widget — NurtureNext's own site embed.
 
-         This is the canonical "paste on any website" snippet: a <script> with
-         just data-tenant. The bundle is fully self-contained (React + CSS + the
-         API URL are baked in), so it needs NOTHING else to run. It talks to the
-         public Ask CPAL API, whose widget endpoints allow any origin (CORS '*',
-         no cookies) — so the SAME snippet works on localhost, here in production,
-         and on any firm's site. Do NOT add a hardcoded data-api: a localhost URL
-         points every real visitor at their own machine and breaks the widget.
+         tenant + API base are injected at build time from the Vite env
+         (%VITE_WIDGET_TENANT% / %VITE_WIDGET_API%), so each environment talks to
+         the right backend with the right tenant automatically:
+           • local dev / staging build → .env            (tenant: nurturenext, staging API)
+           • production build           → .env.production (prod tenant, prod API)
+         Change tenant/backend by editing those .env files, NOT this tag.
 
-         To host on another site: copy this <script> tag and serve askcpal-widget.js
-         from that site (or reference its public URL via an absolute src).
+         The bundle is self-contained (React + CSS baked in). The Ask CPAL widget
+         endpoints are CORS-open (any origin, no cookies), so the same bundle runs
+         on localhost, here, and on any firm's site.
 
-         LOCAL-BACKEND DEV ONLY: to test against an accumax-api running on your own
-         machine, temporarily add  data-api="http://localhost:3000/api/v1"  to the
-         tag below. Never commit that — it must not ship to production.
+         PORTABLE EMBED for OTHER firms: copy this <script>, hardcode their own
+         data-tenant (and an absolute src to a hosted askcpal-widget.js), and drop
+         the data-api so it uses the bundle's baked default.
          ───────────────────────────────────────────────────────────────────── -->
     <script
       src="/askcpal-widget.js"
       data-nn-widget
-      data-tenant="tenant"
+      data-tenant="%VITE_WIDGET_TENANT%"
+      data-api="%VITE_WIDGET_API%"
       async
     ></script>
   </body>

@@ -158,7 +158,6 @@ export default function AskfirmChatbot() {
     phone: "",
   });
   const [contactError, setContactError] = useState("");
-  const [contactLoading, setContactLoading] = useState(false);
   const [settings, setSettings] = useState<FirmSettings>({
     chatbotName: DEFAULT_CHATBOT_NAME,
     chatbotLogo: "",
@@ -294,7 +293,7 @@ export default function AskfirmChatbot() {
     }
   };
 
-  const submitContact = async () => {
+  const submitContact = () => {
     const { firstName, lastName, email, phone } = contactForm;
     if (!firstName.trim() || !lastName.trim() || !email.trim()) {
       setContactError("First name, last name and email are required.");
@@ -306,21 +305,28 @@ export default function AskfirmChatbot() {
       return;
     }
     setContactError("");
-    setContactLoading(true);
-    try {
-      await askfirmService.saveContact({
+
+    // Optimistic submit: the lead save + advisor-notification emails run
+    // server-side and can take several seconds, so there's no reason to make the
+    // visitor wait on them. Show the success state immediately and fire the
+    // request in the background. If it fails, roll back to the form (input is
+    // preserved in `contactForm`) with an error so they can retry — the lead is
+    // never silently dropped.
+    setContactFormSubmitted(true);
+    askfirmService
+      .saveContact({
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         email: email.trim(),
         phone: phone.trim(),
         conversationHistory: getHistory(),
+      })
+      .catch((err) => {
+        setContactFormSubmitted(false);
+        setContactError(
+          err instanceof Error ? err.message : "Submission failed. Please try again.",
+        );
       });
-      setContactFormSubmitted(true);
-    } catch (err) {
-      setContactError(err instanceof Error ? err.message : "Submission failed. Please try again.");
-    } finally {
-      setContactLoading(false);
-    }
   };
 
   const limitReached = questionCount >= settings.questionLimit;
@@ -761,10 +767,9 @@ export default function AskfirmChatbot() {
                   <button
                     type="button"
                     onClick={submitContact}
-                    disabled={contactLoading}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
                   >
-                    {contactLoading ? "Submitting..." : "Submit details"}
+                    Submit details
                   </button>
                   <p className="text-center text-[11px] text-slate-500">
                     By submitting, you agree to be contacted by {settings.customerName}.
