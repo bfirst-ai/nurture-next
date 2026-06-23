@@ -88,20 +88,19 @@
 }
 
 /* ── Lead-generation widget restyle ─────────────────────────────────────────
-   The shared AskfirmChatbot component is hard-coded to a blue palette. For the
-   embeddable lead-gen widget we remap that palette to a distinct accent
-   (default teal) via accent CSS variables + targeted utility overrides — so the
-   embedded widget looks visually distinct from the in-app marketing chatbot
-   WITHOUT forking the component. embed.tsx can override --nn-accent at runtime
-   from the host site's config (data-accent), letting firms match their brand.
+   The shared AskfirmChatbot component is hard-coded to a blue palette. We remap
+   it via accent CSS variables to match the NurtureNext site's PRIMARY blue
+   (--primary: hsl(221 83% 53%) = blue-600) — the component's blue utilities are
+   redirected to --nn-accent below — WITHOUT forking the component. embed.tsx can
+   still override --nn-accent at runtime (data-accent) so firms match their brand.
    --------------------------------------------------------------------------- */
 :host {
-  --nn-accent: #0d9488;        /* teal-600 */
-  --nn-accent-dark: #0f766e;   /* teal-700 */
-  --nn-accent-soft: #f0fdfa;   /* teal-50  */
-  --nn-accent-softer: #ccfbf1; /* teal-100 */
-  --nn-accent-border: #99f6e4; /* teal-200 */
-  --nn-accent-ring: rgba(13, 148, 136, 0.18);
+  --nn-accent: #2563eb;        /* site primary — blue-600 */
+  --nn-accent-dark: #1d4ed8;   /* blue-700 (hover)        */
+  --nn-accent-soft: #eff6ff;   /* blue-50                 */
+  --nn-accent-softer: #dbeafe; /* blue-100                */
+  --nn-accent-border: #bfdbfe; /* blue-200                */
+  --nn-accent-ring: rgba(37, 99, 235, 0.18);
 }
 
 /* backgrounds */

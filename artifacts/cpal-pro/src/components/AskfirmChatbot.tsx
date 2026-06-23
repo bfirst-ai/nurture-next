@@ -333,20 +333,42 @@ export default function AskfirmChatbot() {
   const isEmpty = messages.length === 0;
 
   const Avatar = ({ size }: { size: "sm" | "md" | "lg" }) => {
-    const wrapSize = size === "lg" ? "h-14 w-14" : size === "md" ? "h-10 w-10" : "h-8 w-8";
+    const px = size === "lg" ? 56 : size === "md" ? 40 : 32;
+    const radii: Record<typeof size, string> = { lg: "1rem", md: "0.75rem", sm: "0.5rem" };
     const iconSize = size === "lg" ? "h-7 w-7" : size === "md" ? "h-5 w-5" : "h-4 w-4";
-    const radius = size === "lg" ? "rounded-2xl" : "rounded-xl";
     if (settings.chatbotLogo) {
       return (
-        <img
-          src={settings.chatbotLogo}
-          alt={settings.chatbotName}
-          className={`${wrapSize} ${radius} object-cover`}
-        />
+        <div
+          style={{
+            width: px,
+            height: px,
+            minWidth: px,
+            borderRadius: radii[size],
+            overflow: "hidden",
+            flexShrink: 0,
+            display: "block",
+          }}
+        >
+          <img
+            src={settings.chatbotLogo}
+            alt={settings.chatbotName}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              borderRadius: radii[size],
+            }}
+          />
+        </div>
       );
     }
+    const radius = size === "lg" ? "rounded-2xl" : size === "md" ? "rounded-xl" : "rounded-lg";
     return (
-      <div className={`flex ${wrapSize} items-center justify-center ${radius} bg-blue-700 text-white`}>
+      <div
+        className={`flex shrink-0 items-center justify-center ${radius} bg-blue-700 text-white`}
+        style={{ width: px, height: px, minWidth: px }}
+      >
         <BrainCog className={iconSize} />
       </div>
     );
@@ -381,8 +403,8 @@ export default function AskfirmChatbot() {
                 <span className="text-[14px] font-semibold leading-snug text-slate-900">
                   {settings.chatbotName}
                 </span>
-                <span className="text-[11px] font-medium text-emerald-600">
-                  <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[11px] font-medium text-blue-700">
+                  <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-blue-700" />
                   Online
                 </span>
               </div>
@@ -458,7 +480,7 @@ export default function AskfirmChatbot() {
           <div className="flex-1 overflow-y-auto bg-slate-50">
             {isEmpty ? (
               <div className="flex h-full flex-col items-center justify-center px-6 text-center">
-                <div className="mb-4 shadow-lg shadow-blue-700/20">
+                <div className="mb-4">
                   <Avatar size="lg" />
                 </div>
                 <h2 className="text-xl font-bold text-slate-900">
@@ -624,13 +646,11 @@ export default function AskfirmChatbot() {
           type="button"
           onClick={() => setOpen((p) => !p)}
           aria-label={open ? "Close chat" : "Open chat"}
-          className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-xl shadow-blue-700/30 transition-all duration-300 hover:scale-105 hover:bg-blue-800 ${
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-700 text-white transition-all duration-300 hover:scale-105 hover:bg-blue-800 ${
             open && isFullscreen ? "hidden" : ""
           }`}
         >
-          <span
-            className={`transition-transform duration-300 ${open ? "rotate-90" : ""}`}
-          >
+          <span className={`transition-transform duration-300 ${open ? "rotate-90" : ""}`}>
             {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
           </span>
         </button>
@@ -646,8 +666,8 @@ export default function AskfirmChatbot() {
           <div className="nn-contact-modal w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-[0_30px_60px_-15px_rgba(15,23,42,0.35)] ring-1 ring-slate-200">
             {contactFormSubmitted ? (
               <div className="px-8 py-10 text-center">
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 ring-8 ring-emerald-50/40">
-                  <CheckCircle2 className="h-9 w-9 text-emerald-600" />
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 ring-8 ring-blue-50/40">
+                  <CheckCircle2 className="h-9 w-9 text-blue-700" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">You're all set!</h3>
                 <p className="mx-auto mt-2 max-w-[280px] text-sm leading-relaxed text-slate-600">

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AskFirm Widget — Local Test</title>
+    <style>
+      body { font: 16px/1.5 system-ui, sans-serif; margin: 40px; color: #222; }
+      code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>AskFirm widget — local test harness</h1>
+    <p>
+      This page embeds the lead-gen widget exactly like a firm's site would, but
+      points <code>data-api</code> at your local API. The chat bubble appears
+      bottom-right. Open DevTools → Network and watch the calls to
+      <code>/askfirm/widget-config</code> and <code>/askfirm/chat</code> — both
+      must carry the <code>Tenant: nurturenext</code> request header.
+    </p>
+
+    <!--
+      Uses the already-built bundle; data-api overrides its baked-in host.
+      data-tenant MUST equal the slug of a tenant that has an ACTIVE openaiConfig.
+      Here we target the MASTER tenant ("accumax") on the STAGING backend, which
+      is where nurture-next is being deployed. Change data-tenant if you provision
+      a dedicated tenant instead.
+    -->
+    <script
+      src="./public/askcpal-widget.js"
+      data-nn-widget
+      data-tenant="accumax"
+      data-api="https://api-multi-tenant.azurewebsites.net/api/v1"
+      async
+    ></script>
+  </body>
+</html>
