@@ -20,17 +20,16 @@
     </p>
 
     <!--
-      Uses the already-built bundle; data-api overrides its baked-in host.
-      data-tenant MUST equal the slug of a tenant that has an ACTIVE openaiConfig.
-      Here we target the MASTER tenant ("accumax") on the STAGING backend, which
-      is where nurture-next is being deployed. Change data-tenant if you provision
-      a dedicated tenant instead.
+      Uses the already-built bundle; data-api overrides its baked-in host so the
+      widget calls the LOCAL API instead of the (currently down) staging backend.
+      data-tenant must match a tenant that has an ACTIVE openaiConfig locally —
+      "nurturenext" is confirmed working (widget-config + chat both 200).
     -->
     <script
       src="./public/askcpal-widget.js"
       data-nn-widget
-      data-tenant="accumax"
-      data-api="https://api-multi-tenant.azurewebsites.net/api/v1"
+      data-tenant="nurturenext"
+      data-api="http://localhost:3000/api/v1"
       async
     ></script>
   </body>
