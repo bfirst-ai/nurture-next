@@ -24,26 +24,10 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- ─────────────────────────────────────────────────────────────────────
-         Ask CPAL Lead Generation Widget — NurtureNext's own site embed.
-
-         tenant + API base are injected at build time from the Vite env
-         (%VITE_WIDGET_TENANT% / %VITE_WIDGET_API%), so each environment talks to
-         the right backend with the right tenant automatically:
-           • local dev / staging build → .env            (tenant: nurturenext, staging API)
-           • production build           → .env.production (prod tenant, prod API)
-         Change tenant/backend by editing those .env files, NOT this tag.
-
-         The bundle is self-contained (React + CSS baked in). The Ask CPAL widget
-         endpoints are CORS-open (any origin, no cookies), so the same bundle runs
-         on localhost, here, and on any firm's site.
-
-         PORTABLE EMBED for OTHER firms: copy this <script>, hardcode their own
-         data-tenant (and an absolute src to a hosted askcpal-widget.js), and drop
-         the data-api so it uses the bundle's baked default.
-         ───────────────────────────────────────────────────────────────────── -->
+    <!-- FrontDesk Widget — the same AccuMax embed any firm pastes into its site.
+         Script URL, tenant and API come from the Vite env (.env / .env.production). -->
     <script
-      src="/askcpal-widget.js"
+      src="%VITE_WIDGET_SRC%"
       data-nn-widget
       data-tenant="%VITE_WIDGET_TENANT%"
       data-api="%VITE_WIDGET_API%"
